@@ -44,7 +44,7 @@ const Header: React.FC = () => {
   };
 
   const pathname = usePathname();
-  let screenKey = pathname;
+  const screenKey = pathname;
   if (!["/yachts", "/yachts/addnewyachts"].includes(pathname) &&
     /^\/yachts\/[^/]+$/.test(pathname)) {
   }

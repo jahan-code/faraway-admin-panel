@@ -41,7 +41,13 @@ const SigninForm: React.FC = () => {
         validationSchema,
         onSubmit: async (values, { resetForm, setSubmitting, setFieldError }) => {
             try {
+                const resultAction = {
+                    email: values.email,
+                    password: values.password
+                };
+                console.log(resultAction, "resultAction")
                 router.push("/dashboard");
+                resetForm(); 
                 // const resultAction = await dispatch(signinUser({
                 //     email: values.email,
                 //     password: values.password
