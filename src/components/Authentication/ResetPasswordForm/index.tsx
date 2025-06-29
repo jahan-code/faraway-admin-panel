@@ -13,11 +13,8 @@ import type { AppDispatch, RootState } from '@/lib/Store/store';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-interface ResetPasswordFormProps {
-    onNext: () => void;
-}
 
-const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ onNext }) => {
+const ResetPasswordForm: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const { error } = useSelector((state: RootState) => state.otp);

@@ -9,17 +9,16 @@ import * as Yup from "yup";
 import MailBox from "@/icons/MailBox";
 import Lock from "@/icons/Lock";
 import Button from "@/common/Button";
-import GoogleButton from "@/common/GoogleButton";
-import { useSelector, useDispatch } from "react-redux";
-import { signinUser } from "@/lib/Features/Auth/signinslice";
-import type { AppDispatch, RootState } from '@/lib/Store/store';
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+// import { useSelector, useDispatch } from "react-redux";
+// import { signinUser } from "@/lib/Features/Auth/signinslice";
+// import type { AppDispatch, RootState } from '@/lib/Store/store';
+// import { toast, ToastContainer } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 const SigninForm: React.FC = () => {
-    const dispatch = useDispatch<AppDispatch>();
-    const { error } = useSelector((state: RootState) => state.signin);
+    // const dispatch = useDispatch<AppDispatch>();
+    // const { error } = useSelector((state: RootState) => state.signin);
     const router = useRouter();
 
     const validationSchema = Yup.object({
@@ -42,25 +41,26 @@ const SigninForm: React.FC = () => {
         validationSchema,
         onSubmit: async (values, { resetForm, setSubmitting, setFieldError }) => {
             try {
-                const resultAction = await dispatch(signinUser({
-                    email: values.email,
-                    password: values.password
-                }));
+                router.push("/dashboard");
+                // const resultAction = await dispatch(signinUser({
+                //     email: values.email,
+                //     password: values.password
+                // }));
 
-                if (signinUser.fulfilled.match(resultAction)) {
-                    const message = resultAction.payload?.message;
-                    toast.success(message, {
-                        onClose: () => {
-                            router.push("/dashboard");
-                        },
-                    });
-                    resetForm();        
-                } else if (signinUser.rejected.match(resultAction)) {
-                    const errorPayload = resultAction.payload as { error: { message: string } };
-                    const errorMessage = errorPayload?.error?.message || "Something went wrong.";
-                    console.log(errorMessage, "testing")
-                    toast.error(errorMessage);
-                }
+                // if (signinUser.fulfilled.match(resultAction)) {
+                //     const message = resultAction.payload?.message;
+                //     toast.success(message, {
+                //         onClose: () => {
+                //             router.push("/dashboard");
+                //         },
+                //     });
+                //     resetForm();        
+                // } else if (signinUser.rejected.match(resultAction)) {
+                //     const errorPayload = resultAction.payload as { error: { message: string } };
+                //     const errorMessage = errorPayload?.error?.message || "Something went wrong.";
+                //     console.log(errorMessage, "testing")
+                //     toast.error(errorMessage);
+                // }
             } catch (error) {
                 console.error("Login error:", error);
                 setFieldError("password", "An unexpected error occurred");
@@ -73,12 +73,12 @@ const SigninForm: React.FC = () => {
 
     return (
         <form onSubmit={formik.handleSubmit}>
-            <ToastContainer position="top-right" autoClose={3000} />
+            {/* <ToastContainer position="top-right" autoClose={3000} /> */}
             <div className="px-6 sm:px-10 xl:px-12 space-y-3">
                 <Image src="/images/logo.png" alt="logo" width={552} height={210} className="w-[15rem]"/>
                 <h2 className="text-[#1E1E1E] text-[19px] font-bold font-plusjakarta">Anchor Your Dreams</h2>
                 <p className="font-plusjakarta font-medium text-[14px] text-[#1E1E1E]">Join a world of endless adventures — book your dream yacht or list your own and let the journey begin!</p>
-                {error && <p className="text-[#FF4234] text-sm">{error}</p>}
+                {/* {error && <p className="text-[#FF4234] text-sm">{error}</p>} */}
                 <div className="space-y-1">
                     <label htmlFor="" className="text-[#012A50] font-plusjakarta font-bold text-[14px] mb-[12px] block">Email</label>
                     <Input

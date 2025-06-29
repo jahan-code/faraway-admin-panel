@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -16,10 +16,8 @@ const YachtsDetail = () => {
   const [favorites, setFavorites] = useState<Record<number, Record<number, boolean>>>({});
   const [activeSlide, setActiveSlide] = useState(0);
   const sliderRef = useRef<InstanceType<typeof Slider> | null>(null);
-  const router = useRouter();
+  // const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
-  const yachtsPerPage = 5;
-  const [page, setPage] = useState(1);
 
   const toggleFavorite = (itemId: number, imgIndex: number) => {
     setFavorites((prev) => ({
@@ -47,12 +45,12 @@ const YachtsDetail = () => {
     .filter(yachts =>
       yachts?.label?.toLowerCase().includes(searchTerm.toLowerCase())
     )
-  const isFiltering = searchTerm.trim() !== '';
+  // const isFiltering = searchTerm.trim() !== '';
   const currentItems = filteredData;
 
-  const handleNavigate = (id: number | string) => {
-    router.push(`/detail/${id}`);
-  };
+  // const handleNavigate = (id: number | string) => {
+  //   router.push(`/detail/${id}`);
+  // };
 
   // const handlePageChange = (newPage: number) => {
   //   if (newPage >= 1 && newPage <= totalPages) {
