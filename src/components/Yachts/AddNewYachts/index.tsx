@@ -6,13 +6,13 @@ import { MdDeleteOutline } from "react-icons/md";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import RichTextEditor from "./RichTextEditor";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from '@/lib/Store/store';
-import { toast, ToastContainer } from "react-toastify";
-import { useFormik } from "formik";
-import 'react-toastify/dist/ReactToastify.css';
+// import { useDispatch } from "react-redux";
+// import type { AppDispatch } from '@/lib/Store/store';
+// import { toast, ToastContainer } from "react-toastify";
+// import { useFormik } from "formik";
+// import 'react-toastify/dist/ReactToastify.css';
 // import { addVehicleInfo } from "@/lib/Features/Yachts/addvendorslice";
-import { yachtsvalidationSchema, FormYachtsValues } from "@/lib/Validation/addyachtsValidationSchema";
+// import { yachtsvalidationSchema, FormYachtsValues } from "@/lib/Validation/addyachtsValidationSchema";
 
 type FileItem = {
     file: File;
@@ -22,7 +22,7 @@ type FileItem = {
 
 const AddNewYachts: React.FC = () => {
 
-    const dispatch = useDispatch<AppDispatch>();
+    // const dispatch = useDispatch<AppDispatch>();
     const [files, setFiles] = useState<FileItem[]>([]);
     const router = useRouter();
     const [values, setValues] = useState<Record<string, string | number | boolean>>({});
