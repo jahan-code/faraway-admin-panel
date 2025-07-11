@@ -4,16 +4,14 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import Button from "@/common/Button";
 
-const SigninForm: React.FC = () => {
+const CongratulationsForm: React.FC = () => {
 
     const router = useRouter();
-
     const formik = useFormik({
         initialValues: {
-            
         },
         onSubmit: async () => {
-                router.push("/");
+            router.push("/");
         },
     });
 
@@ -26,4 +24,4 @@ const SigninForm: React.FC = () => {
     );
 };
 
-export default SigninForm;
+export default CongratulationsForm;

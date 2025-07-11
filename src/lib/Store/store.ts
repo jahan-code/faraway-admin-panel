@@ -1,22 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import SignupReducer from "@/lib/Features/Auth/signupslice";
-import SigninReducer from "@/lib/Features/Auth/signinslice";
-import OtpReducer from "@/lib/Features/Auth/otpslice";
-import ResendOtpReducer from "@/lib/Features/Auth/resendslice";
-import ForgotPasswordReducer from "@/lib/Features/Auth/forgotpasswordslice";
-import ResetPasswordReducer from "@/lib/Features/Auth/resetpasswordslice";
-import AddVendorReducer from "@/lib/Features/Vendor/addvendorslice";
+import AuthReducer from "@/lib/Features/Auth/authSlice"
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      signup: SignupReducer,
-      signin: SigninReducer,
-      otp: OtpReducer,
-      resendotp: ResendOtpReducer,
-      forgotpassword: ForgotPasswordReducer,
-      resetpassword: ResetPasswordReducer,
-      addvendor: AddVendorReducer
+      auth: AuthReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
-import { DetailData } from "@/data/Vehicles/Inventory";
+import { DetailData } from "@/data/Yachts";
 import BreadCrum from "./BreadCrum";
 
 const YachtsDetail = () => {

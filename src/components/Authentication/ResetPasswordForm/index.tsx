@@ -7,9 +7,9 @@ import Button from "@/common/Button";
 import Lock from "@/icons/Lock";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
-import { resetpasswordUser } from "@/lib/Features/Auth/resetpasswordslice";
-import type { AppDispatch, RootState } from '@/lib/Store/store';
+import { useDispatch } from "react-redux";
+import { resetPassword } from "@/lib/Features/Auth/authSlice";
+import type { AppDispatch } from '@/lib/Store/store';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -17,7 +17,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const ResetPasswordForm: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>();
-    const { error } = useSelector((state: RootState) => state.otp);
     const router = useRouter();
 
     const validationSchema = Yup.object({
@@ -47,12 +46,12 @@ const ResetPasswordForm: React.FC = () => {
                 return;
             }
             try {
-                const resultAction = await dispatch(resetpasswordUser({
+                const resultAction = await dispatch(resetPassword({
+                    email: storedEmail,
                     newPassword: values.password,
-                    confirmPassword: values.confirmPassword
                 }));
 
-                if (resetpasswordUser.fulfilled.match(resultAction)) {
+                if (resetPassword.fulfilled.match(resultAction)) {
                     const message = resultAction.payload?.message;
                     toast.success(message, {
                         onClose: () => {
@@ -61,7 +60,7 @@ const ResetPasswordForm: React.FC = () => {
                     });
                     resetForm();
                     localStorage.removeItem("userEmail");
-                } else if (resetpasswordUser.rejected.match(resultAction)) {
+                } else if (resetPassword.rejected.match(resultAction)) {
                     const errorMessage = resultAction.payload as string;
                     toast.error(errorMessage);
                 }
@@ -75,59 +74,60 @@ const ResetPasswordForm: React.FC = () => {
     });
 
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <>
             <ToastContainer position="top-right" autoClose={3000} />
-            <div className="px-6 sm:px-10 xl:px-12 space-y-3">
-                <div className="space-y-3">
-                <Image src="/images/logo.png" alt="logo" width={552} height={210} className="w-[15rem]"/>
-                    <h2 className="text-[#1E1E1E] text-[19px] font-bold font-plusjakarta">Anchor Your Dreams</h2>
-                    <h2 className="text-[#012A50] text-[24px] font-bold font-plusjakarta">
-                        Reset Your Password
-                    </h2>
-                    <p className="text-[14px] font-medium text-[#888888] font-plusjakarta">
-                        Enter your new password below to reset your access. Make sure it&apos;s strong and secure for a smooth sailing experience.
-                    </p>
-                    {error && <p className="text-[#FF4234] text-sm">{error}</p>}
-                </div>
-                <div className="space-y-6">
-                    <label htmlFor="" className="text-[#012A50] font-plusjakarta font-bold text-[14px] mb-[12px] block">Enter New Password</label>
-                    <div className="space-y-1">
-                        <Input
-                            name="password"
-                            type="password"
-                            icon={<Lock />}
-                            placeholder="Your Password"
-                            value={formik.values.password}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.password && !!formik.errors.password}
-                        />
-                        {formik.touched.password && formik.errors.password && (<p className="text-[#FF4234] text-sm">{formik.errors.password}</p>)}
+            <form onSubmit={formik.handleSubmit}>
+                <div className="px-6 sm:px-10 xl:px-12 space-y-3">
+                    <div className="space-y-3">
+                        <Image src="/images/logo.png" alt="logo" width={552} height={210} className="w-[15rem]" />
+                        <h2 className="text-[#1E1E1E] text-[19px] font-bold font-plusjakarta">Anchor Your Dreams</h2>
+                        <h2 className="text-[#012A50] text-[24px] font-bold font-plusjakarta">
+                            Reset Your Password
+                        </h2>
+                        <p className="text-[14px] font-medium text-[#888888] font-plusjakarta">
+                            Enter your new password below to reset your access. Make sure it&apos;s strong and secure for a smooth sailing experience.
+                        </p>
                     </div>
-                    <label htmlFor="" className="text-[#012A50] font-plusjakarta font-bold text-[14px] mb-[12px] block">Confirm Password</label>
-                    <div className="space-y-1">
-                        <Input
-                            name="confirmPassword"
-                            type="password"
-                            icon={<Lock />}
-                            placeholder="Confirm password"
-                            value={formik.values.confirmPassword}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
-                        />
-                        {formik.touched.confirmPassword && formik.errors.confirmPassword && (<p className="text-[#FF4234] text-sm">{formik.errors.confirmPassword}</p>)}
+                    <div className="space-y-6">
+                        <label htmlFor="" className="text-[#012A50] font-plusjakarta font-bold text-[14px] mb-[12px] block">Enter New Password</label>
+                        <div className="space-y-1">
+                            <Input
+                                name="password"
+                                type="password"
+                                icon={<Lock />}
+                                placeholder="Your Password"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.password && !!formik.errors.password}
+                            />
+                            {formik.touched.password && formik.errors.password && (<p className="text-[#FF4234] text-sm">{formik.errors.password}</p>)}
+                        </div>
+                        <label htmlFor="" className="text-[#012A50] font-plusjakarta font-bold text-[14px] mb-[12px] block">Confirm Password</label>
+                        <div className="space-y-1">
+                            <Input
+                                name="confirmPassword"
+                                type="password"
+                                icon={<Lock />}
+                                placeholder="Confirm password"
+                                value={formik.values.confirmPassword}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
+                            />
+                            {formik.touched.confirmPassword && formik.errors.confirmPassword && (<p className="text-[#FF4234] text-sm">{formik.errors.confirmPassword}</p>)}
+                        </div>
                     </div>
+                    <Button
+                        type="submit"
+                        className={`w-full ${formik.isSubmitting ? "bg-[#C3974C]" : "bg-[#001B48]"}`}
+                        disabled={formik.isSubmitting}
+                    >
+                        {formik.isSubmitting ? "Loading..." : "Reset Password"}
+                    </Button>
                 </div>
-                <Button
-                    type="submit"
-                    className={`w-full ${formik.isSubmitting ? "bg-[#C3974C]" : "bg-[#001B48]"}`}
-                    disabled={formik.isSubmitting}
-                >
-                    {formik.isSubmitting ? "Loading..." : "Reset Password"}
-                </Button>
-            </div>
-        </form>
+            </form>
+        </>
     );
 };
 
