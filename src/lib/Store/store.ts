@@ -6,7 +6,7 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       auth: AuthReducer,
-      yacht: YachtsReducer
+      yachts: YachtsReducer
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
