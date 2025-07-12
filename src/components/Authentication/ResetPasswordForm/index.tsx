@@ -61,7 +61,8 @@ const ResetPasswordForm: React.FC = () => {
                     resetForm();
                     localStorage.removeItem("userEmail");
                 } else if (resetPassword.rejected.match(resultAction)) {
-                    const errorMessage = resultAction.payload as string;
+                    const errorPayload = resultAction.payload as { error: { message: string } };
+                    const errorMessage = errorPayload?.error?.message || "Something went wrong.";
                     toast.error(errorMessage);
                 }
             } catch (error) {

@@ -45,7 +45,8 @@ const ForgetPasswordForm: React.FC = () => {
                     localStorage.setItem("userEmail", values.email);
                     resetForm();
                 } else if (forgotPassword.rejected.match(resultAction)) {
-                    const errorMessage = resultAction.payload as string;
+                    const errorPayload = resultAction.payload as { error: { message: string } };
+                    const errorMessage = errorPayload?.error?.message || "Something went wrong.";
                     toast.error(errorMessage);
                 }
             } catch (error) {

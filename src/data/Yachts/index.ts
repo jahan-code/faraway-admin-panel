@@ -534,7 +534,7 @@ export const NewYachtsData: NewYachtsFormSection[] = [
         ],
       },
       {
-        label: "Price",
+        label: "Category",
         placeholder: "e.g,. Budget",
         type: "dropdown",
         options: [
@@ -559,10 +559,11 @@ export const NewYachtsData: NewYachtsFormSection[] = [
   {
     section: "Length Range",
     fields: [
-      { label: "< 40 ft", type: "checkbox" },
-      { label: "40 To 60 ft", type: "checkbox" },
-      { label: "60 To 80 ft", type: "checkbox" },
-      { label: "> 80 ft", type: "checkbox" },
+      { label: "< 40", type: "checkbox" },
+      { label: "40 To 60", type: "checkbox" },
+      { label: "60 To 80", type: "checkbox" },
+      { label: "> 80", type: "checkbox" },
+      { label: "Title", placeholder: "e.g,. Luxury" },
       { label: "Cabins", placeholder: "e.g,. 1" },
       { label: "Bathrooms", placeholder: "e.g,. 2" },
       { label: "Passenger Day Trip", placeholder: "e.g,. 1" },
@@ -587,6 +588,7 @@ export const NewYachtsData: NewYachtsFormSection[] = [
       { label: "Daytrip Price (THB)", placeholder: "e.g,. 800 THB" },
       { label: "Daytrip Price (USD)", placeholder: "e.g,. 800 USD" },
       { label: "Primary Image", placeholder: "" },
+      { label: "Gallery Images", placeholder: "" },
     ],
   },
 ];

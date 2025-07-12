@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AuthReducer from "@/lib/Features/Auth/authSlice"
+import AuthReducer from "@/lib/Features/Auth/authSlice";
+import YachtsReducer from "@/lib/Features/Yachts/addyachtsSlice"
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       auth: AuthReducer,
+      yacht: YachtsReducer
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

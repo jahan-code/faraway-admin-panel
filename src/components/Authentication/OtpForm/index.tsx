@@ -53,9 +53,9 @@ const OtpVerificationForm: React.FC = () => {
                     });
                     resetForm();
                 } else if (verifyOtp.rejected.match(resultAction)) {
-                    const errorMessage = resultAction.payload as string;
+                    const errorPayload = resultAction.payload as { error: { message: string } };
+                    const errorMessage = errorPayload?.error?.message || "Invalid OTP.";
                     toast.error(errorMessage);
-                    setFieldError("otp", (resultAction.payload as string) || "Invalid OTP.");
                     resetOtpInputs();
                 }
             } catch (error) {
