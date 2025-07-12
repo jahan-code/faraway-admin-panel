@@ -448,7 +448,6 @@ const AddNewYachts: React.FC = () => {
                                 )}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-4 gap-4">
                                     {section.fields.map((field, index) => {
-                                        const value = formik.values[field.label as keyof typeof formik.values] ?? "";
                                         const fieldName = field.label as keyof FormYachtsValues;
                                         const fieldError = getFieldError(fieldName);
                                         return (
