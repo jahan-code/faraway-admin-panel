@@ -44,13 +44,14 @@ export const yachtsvalidationSchema = Yup.object().shape({
     .test("file-size", "File must be 1MB or smaller", (value) => {
       return value instanceof File && value.size <= 1 * 1024 * 1024;
     })
-    .test("file-type", "Only JPEG, PNG, or WEBP images are allowed", (value) => {
+    .test("file-type", "Only JPEG, PNG images are allowed", (value) => {
       if (!(value instanceof File)) return false;
-      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+      const allowedTypes = ["image/jpeg", "image/png"];
       return allowedTypes.includes(value.type);
     }),
   "Gallery Images": Yup.array<File>()
     .required("Gallery Images is required")
+    .min(1, "Gallery Images is required")
     .test("is-array", "Must be an array of files", (value) => {
       return value === null || Array.isArray(value);
     })
@@ -61,8 +62,8 @@ export const yachtsvalidationSchema = Yup.object().shape({
       return value === null ||
         (Array.isArray(value) && value.every(file => file.size <= 1 * 1024 * 1024));
     })
-    .test("file-type", "Only JPEG, PNG, or WEBP images are allowed", (value) => {
-      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    .test("file-type", "Only JPEG, PNG images are allowed", (value) => {
+      const allowedTypes = ["image/jpeg", "image/png"];
       return value === null ||
         (Array.isArray(value) && value.every(file => allowedTypes.includes(file.type)));
     })

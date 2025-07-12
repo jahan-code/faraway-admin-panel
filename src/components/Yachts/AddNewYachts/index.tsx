@@ -27,7 +27,6 @@ const AddNewYachts: React.FC = () => {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files[0]) {
-            console.log("Primary Image selected:", files[0]);
             formik.setFieldValue("Primary Image", files[0]);
         }
     };
@@ -39,9 +38,9 @@ const AddNewYachts: React.FC = () => {
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files.length > 0) {
-            console.log("Gallery Images selected:", Array.from(files));
             const existingFiles = Array.isArray(formik.values["Gallery Images"]) ? formik.values["Gallery Images"] : [];
             formik.setFieldValue("Gallery Images", [...existingFiles, ...Array.from(files)]);
+            formik.setFieldTouched("Gallery Images", true, false);
         }
     };
 
@@ -51,6 +50,7 @@ const AddNewYachts: React.FC = () => {
         if (files && files.length > 0) {
             const existingFiles = Array.isArray(formik.values["Gallery Images"]) ? formik.values["Gallery Images"] : [];
             formik.setFieldValue("Gallery Images", [...existingFiles, ...Array.from(files)]);
+            formik.setFieldTouched("Gallery Images", true, false);
         }
     };
 
@@ -227,7 +227,6 @@ const AddNewYachts: React.FC = () => {
                                     const isDropdown = field.type === "dropdown";
                                     const isPrimaryUpload = field.label === "Primary Image";
                                     const isFileUpload = field.label === "Gallery Images";
-                                    const isNotes = field.label === "Description";
                                     const isCheckbox = field.type === "checkbox";
                                     const fieldName = field.label as keyof FormYachtsValues;
                                     const fieldError = getFieldError(fieldName);
@@ -242,6 +241,7 @@ const AddNewYachts: React.FC = () => {
                                                         checked={formik.values["Length Range"] === field.label}
                                                         onChange={(e) => {
                                                             formik.setFieldValue("Length Range", e.target.value);
+                                                            formik.setFieldTouched("Length Range", true, false);
                                                         }}
                                                         onBlur={formik.handleBlur}
                                                         className="peer hidden"
@@ -255,16 +255,16 @@ const AddNewYachts: React.FC = () => {
                                                         {field.label}
                                                     </label>
                                                 </label>
-                                                {fieldError && (
+                                                {index === section.fields.filter(f => f.type === "checkbox").length - 1 && getFieldError("Length Range" as keyof FormYachtsValues) && (
                                                     <p className="text-[#DB2828] text-sm mt-1">
-                                                        {typeof formik.errors[fieldName] === 'string' && formik.errors[fieldName]}
+                                                        {typeof formik.errors["Length Range"] === 'string' && formik.errors["Length Range"]}
                                                     </p>
                                                 )}
                                             </div>
                                         );
                                     }
                                     return (
-                                        <div key={index} className={`${isFileUpload || isNotes
+                                        <div key={index} className={`${isFileUpload
                                             ? "col-span-1 sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4"
                                             : "col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 xl:col-span-1"
                                             }`}>
@@ -296,25 +296,6 @@ const AddNewYachts: React.FC = () => {
                                                             ))}
                                                         </select>
                                                     </div>
-                                                    {fieldError && (
-                                                        <p className="text-[#DB2828] text-sm mt-1">{typeof formik.errors[fieldName] === 'string' && formik.errors[fieldName]}</p>
-                                                    )}
-                                                </>
-                                            ) : isNotes ? (
-                                                <>
-                                                    <textarea
-                                                        name={fieldName}
-                                                        placeholder={field.placeholder}
-                                                        value={formik.values[fieldName] as string}
-                                                        onChange={(e) => {
-                                                            formik.handleChange(e);
-                                                            formik.setFieldTouched(fieldName, true, false);
-                                                        }}
-                                                        onBlur={formik.handleBlur}
-                                                        rows={3}
-                                                        className={`bg-[#F0F2F4] rounded-lg px-3 py-2 w-full text-[#222222] placeholder:text-[#999999] outline-none ${fieldError ? "border border-[#DB2828]" : ""
-                                                            }`}
-                                                    />
                                                     {fieldError && (
                                                         <p className="text-[#DB2828] text-sm mt-1">{typeof formik.errors[fieldName] === 'string' && formik.errors[fieldName]}</p>
                                                     )}
@@ -351,17 +332,27 @@ const AddNewYachts: React.FC = () => {
                                             ) : isFileUpload ? (
                                                 <>
                                                     <div className={`border border-dashed border-[#C4C4C4] bg-white rounded-md py-12 px-4 text-center w-full  ${fieldError ? "border border-[#DB2828]" : ""}`}>
-                                                        <div onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} className="text-[#B3B3B3] font-normal text-[14px] flex flex-col items-center cursor-pointer">
+                                                        <div 
+                                                            onDrop={handleDrop} 
+                                                            onDragOver={(e) => e.preventDefault()} 
+                                                            onBlur={() => formik.setFieldTouched("Gallery Images", true, false)}
+                                                            className="text-[#B3B3B3] font-normal text-[14px] flex flex-col items-center cursor-pointer"
+                                                        >
                                                             <input
                                                                 type="file"
                                                                 name="Gallery Images"
                                                                 accept="image/png, image/jpeg"
                                                                 multiple
                                                                 onChange={handleFileUpload}
+                                                                onBlur={() => formik.setFieldTouched("Gallery Images", true, false)}
                                                                 className="hidden"
                                                                 id="generalinfo-upload"
                                                             />
-                                                            <label htmlFor="generalinfo-upload" className="cursor-pointer block">
+                                                            <label 
+                                                                htmlFor="generalinfo-upload" 
+                                                                className="cursor-pointer block"
+                                                                onClick={() => formik.setFieldTouched("Gallery Images", true, false)}
+                                                            >
                                                                 <div className="flex items-center gap-1">
                                                                     <Image src="/images/Inventory/file_upload.svg" alt="upload" width={20} height={20} />
                                                                     <p>Drop file to attach or <span className="text-[#0080A7] underline">browser</span></p>
@@ -370,24 +361,27 @@ const AddNewYachts: React.FC = () => {
                                                             </label>
                                                             {Array.isArray(formik.values["Gallery Images"]) && formik.values["Gallery Images"].length > 0 && (
                                                                 <div className="mt-4 grid grid-cols-3 gap-4">
-                                                                    {formik.values["Gallery Images"].map((file: File, index: number) => (
-                                                                        <div key={index} className="relative w-[100px] h-[100px]">
-                                                                            <Image
-                                                                                src={URL.createObjectURL(file)}
-                                                                                alt={`upload-${index}`}
-                                                                                width={100}
-                                                                                height={100}
-                                                                                className="w-[100px] h-[100px] object-cover rounded-lg"
-                                                                            />
-                                                                            <button
-                                                                                type="button"
-                                                                                onClick={() => handleRemoveImage(index)}
-                                                                                className="absolute top-1 right-1 border border-[#CCCCCC] cursor-pointer rounded-md p-1 shadow-lg"
-                                                                            >
-                                                                                <MdDeleteOutline className="text-[#DB2828] hover:text-[#0080A7] text-md" />
-                                                                            </button>
-                                                                        </div>
-                                                                    ))}
+                                                                    {formik.values["Gallery Images"].map((file: File | undefined, index: number) => {
+                                                                        if (!file) return null;
+                                                                        return (
+                                                                            <div key={index} className="relative w-[100px] h-[100px]">
+                                                                                <Image
+                                                                                    src={URL.createObjectURL(file)}
+                                                                                    alt={`upload-${index}`}
+                                                                                    width={100}
+                                                                                    height={100}
+                                                                                    className="w-[100px] h-[100px] object-cover rounded-lg"
+                                                                                />
+                                                                                <button
+                                                                                    type="button"
+                                                                                    onClick={() => handleRemoveImage(index)}
+                                                                                    className="absolute top-1 right-1 border border-[#CCCCCC] cursor-pointer rounded-md p-1 shadow-lg"
+                                                                                >
+                                                                                    <MdDeleteOutline className="text-[#DB2828] hover:text-[#0080A7] text-md" />
+                                                                                </button>
+                                                                            </div>
+                                                                        );
+                                                                    })}
                                                                 </div>
                                                             )}
                                                         </div>
