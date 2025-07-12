@@ -6,16 +6,15 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { DetailData } from "@/data/Yachts";
 import BreadCrum from "./BreadCrum";
 import { useSelector, useDispatch } from "react-redux";
-import { getYachts, deleteYachts } from "@/lib/Features/Yachts/addyachtsSlice";
+import { getYachts } from "@/lib/Features/Yachts/addyachtsSlice";
 import type { RootState, AppDispatch } from '@/lib/Store/store';
-import { CiCalendar, CiLocationOn } from "react-icons/ci";
+import { CiCalendar } from "react-icons/ci";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlineBathroom } from "react-icons/md";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+// import { toast, ToastContainer } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
 
 const YachtsDetail = () => {
 
