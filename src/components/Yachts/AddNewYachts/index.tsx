@@ -232,7 +232,7 @@ const AddNewYachts: React.FC = () => {
                                     const fieldError = getFieldError(fieldName);
                                     if (isCheckbox) {
                                         return (
-                                            <div key={index} className="col-span-4">
+                                            <div key={index} className="col-span-1 sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4">
                                                 <label className="flex items-center gap-2">
                                                     <input
                                                         type="radio"

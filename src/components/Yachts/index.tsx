@@ -138,7 +138,7 @@ const YachtsDetail = () => {
                 {
                   id: 1,
                   img: "/images/Home/featured-ft.svg",
-                  label: yachtItem?.lengthRange ? `${yachtItem.lengthRange} ft` : null,
+                  label: yachtItem?.lengthRange ? `${yachtItem.lengthRange.replace(/[<>]/g, "")} ft` : null,
                 },
                 {
                   id: 2,
@@ -165,7 +165,7 @@ const YachtsDetail = () => {
               ];
               return (
                 <div key={yachtIndex} className="bg-white border border-[#CECECE] rounded-lg shadow-md px-[8px] py-[8px] flex gap-4 items-center overflow-hidden cursor-pointer">
-                  <div className="relative w-[37%] overflow-hidden">
+                  <div className="hidden md:block relative w-[37%] overflow-hidden">
                     {yachtItem.galleryImages?.length > 1 ? (
                       <div className="relative">
                         <Slider ref={sliderRef} {...settings}>
