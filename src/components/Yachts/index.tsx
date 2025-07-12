@@ -22,6 +22,7 @@ const YachtsDetail = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const sliderRef = useRef<InstanceType<typeof Slider> | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  console.log(searchTerm)
   const dispatch = useDispatch<AppDispatch>();
   const { allYachts, getLoading, totalPages, total, currentPage } = useSelector((state: RootState) => state.yachts);
   console.log(allYachts, "Data>>>>>>>")
