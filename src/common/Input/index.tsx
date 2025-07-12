@@ -29,7 +29,7 @@ const Input: React.FC<InputProps> = ({ icon, className, type, error = false, ...
       />
 
       {type === "password" && (
-        <span onClick={togglePasswordVisibility} className="text-black-100">
+        <span onClick={togglePasswordVisibility} className="text-black-100 cursor-pointer">
           {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
         </span>
       )}

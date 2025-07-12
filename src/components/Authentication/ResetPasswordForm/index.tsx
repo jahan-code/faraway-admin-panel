@@ -55,7 +55,7 @@ const ResetPasswordForm: React.FC = () => {
                     const message = resultAction.payload?.message;
                     toast.success(message, {
                         onClose: () => {
-                            router.push("/");
+                            router.push("/congratulations");
                         },
                     });
                     resetForm();
