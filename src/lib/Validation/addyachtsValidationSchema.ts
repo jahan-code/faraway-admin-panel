@@ -55,8 +55,8 @@ export const yachtsvalidationSchema = Yup.object().shape({
     .test("is-array", "Must be an array of files", (value) => {
       return value === null || Array.isArray(value);
     })
-    .test("max-files", "Maximum 10 images allowed", (value) => {
-      return value === null || (Array.isArray(value) && value.length <= 10);
+    .test("max-files", "Maximum 30 images allowed", (value) => {
+      return value === null || (Array.isArray(value) && value.length <= 30);
     })
     .test("file-size", "Each file must be 1MB or smaller", (value) => {
       return value === null ||
