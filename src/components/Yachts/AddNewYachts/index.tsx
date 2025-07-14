@@ -315,7 +315,15 @@ const AddNewYachts: React.FC = () => {
                                                             <>
                                                                 <div className="flex items-center justify-between">
                                                                     <p className="text-[#222222] font-medium">
-                                                                        {(formik.values["Primary Image"] as File)?.name || "No file selected"}
+                                                                        {(() => {
+                                                                            const file = formik.values["Primary Image"] as File;
+                                                                            if (!file) return "No file selected";
+                                                                            const name = file.name;
+                                                                            const extMatch = name.match(/\.[^/.]+$/);
+                                                                            const ext = extMatch ? extMatch[0] : "";
+                                                                            const firstWord = name.replace(/\.[^/.]+$/, "").split(/[ .]/)[0].slice(0, 5);
+                                                                            return `${firstWord}${ext}`;
+                                                                        })()}
                                                                     </p>
                                                                     <MdDeleteOutline
                                                                         className="cursor-pointer text-red-500"
@@ -332,9 +340,9 @@ const AddNewYachts: React.FC = () => {
                                             ) : isFileUpload ? (
                                                 <>
                                                     <div className={`border border-dashed border-[#C4C4C4] bg-white rounded-md py-12 px-4 text-center w-full  ${fieldError ? "border border-[#DB2828]" : ""}`}>
-                                                        <div 
-                                                            onDrop={handleDrop} 
-                                                            onDragOver={(e) => e.preventDefault()} 
+                                                        <div
+                                                            onDrop={handleDrop}
+                                                            onDragOver={(e) => e.preventDefault()}
                                                             onBlur={() => formik.setFieldTouched("Gallery Images", true, false)}
                                                             className="text-[#B3B3B3] font-normal text-[14px] flex flex-col items-center cursor-pointer"
                                                         >
@@ -348,8 +356,8 @@ const AddNewYachts: React.FC = () => {
                                                                 className="hidden"
                                                                 id="generalinfo-upload"
                                                             />
-                                                            <label 
-                                                                htmlFor="generalinfo-upload" 
+                                                            <label
+                                                                htmlFor="generalinfo-upload"
                                                                 className="cursor-pointer block"
                                                                 onClick={() => formik.setFieldTouched("Gallery Images", true, false)}
                                                             >

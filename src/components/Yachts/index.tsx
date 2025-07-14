@@ -164,7 +164,7 @@ const YachtsDetail = () => {
                 },
               ];
               return (
-                <div key={yachtIndex} className="bg-white border border-[#CECECE] rounded-lg shadow-md px-[8px] py-[8px] flex gap-4 items-center overflow-hidden cursor-pointer">
+                <div key={yachtIndex} className="bg-white border border-[#CECECE] rounded-lg shadow-md px-[8px] py-[8px] flex gap-4 items-center overflow-hidden">
                   <div className="hidden md:block relative w-[37%] overflow-hidden">
                     {yachtItem.galleryImages?.length > 1 ? (
                       <div className="relative">
