@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   NewYachtsData,
   RichTextEditorSections,
@@ -31,16 +30,11 @@ type RichTextFieldKey =
   | "Boat Layout";
 
 const AddNewYachts: React.FC = () => {
+
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const [richTextContent, setRichTextContent] = useState<
-    Record<string, string>
-  >({});
   const loading = useSelector((state: RootState) => state.yachts.addLoading);
 
-  const handleRichTextChange = (id: string, content: string) => {
-    setRichTextContent((prev) => ({ ...prev, [id]: content }));
-  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
