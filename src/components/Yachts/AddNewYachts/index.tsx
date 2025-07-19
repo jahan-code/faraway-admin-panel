@@ -18,7 +18,7 @@ import {
   yachtsvalidationSchema,
   FormYachtsValues,
 } from "@/lib/Validation/addyachtsValidationSchema";
-import RichTextEditor from "./RichTextEditorOne";
+import RichTextEditor from "./RichTextEditor";
 
 type RichTextFieldKey =
   | "Price"
