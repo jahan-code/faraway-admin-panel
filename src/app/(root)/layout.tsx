@@ -1,6 +1,7 @@
 'use client'
 
-import { ReactNode } from "react";
+import { useEffect, useState, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { AdminMenus } from "@/data/Sidebar/menu";
@@ -10,6 +11,31 @@ interface Props {
 }
 
 const IndexLayout: React.FC<Props> = ({ children }) => {
+
+    const router = useRouter();
+    const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+
+        if (token) {
+            setIsAuthenticated(true);
+        } else {
+            router.replace('/');
+        }
+
+        setLoading(false);
+    }, [router]);
+
+    if (loading) {
+        return null;
+    }
+
+    if (!isAuthenticated) {
+        return null;
+    }
+
     return (
         <div className="flex lg:bg-[#ecebeb]">
             <div className="hidden lg:block">

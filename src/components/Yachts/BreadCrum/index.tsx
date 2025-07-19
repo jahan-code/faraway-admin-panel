@@ -22,7 +22,7 @@ const BreadCrum: React.FC<BreadCrumProps> = ({ onSearch }) => {
                 <input type="text" placeholder="Search yachts" onChange={(e) => onSearch(e.target.value)} className="placeholder:text-[#999999] w-full outline-none text-[#222222]" />
             </div>
             <div className="hidden md:flex items-center gap-3">
-                <button className="px-[16px] py-[7px] rounded-full bg-[#012A50] text-center font-medium text-white cursor-pointer hover:text-white" onClick={handleAddNewVehicle}>+ Add New Yachts</button>
+                <button className="px-[16px] py-[7px] rounded-full bg-[#012A50] hover:bg-[#5F5C63] text-center font-medium text-white cursor-pointer hover:text-white" onClick={handleAddNewVehicle}>+ Add New Yachts</button>
             </div>
         </div>
     );

@@ -124,11 +124,11 @@ const YachtsDetail = () => {
       <div>
         <BreadCrum onSearch={setSearchTerm} />
         {getLoading ? (
-          <div className="flex items-center justify-center lg:h-[calc(100vh-14.5rem)]">
+          <div className="flex items-center justify-center h-[calc(100vh-14.5rem)]">
             <div className="w-10 h-10 border-3 border-t-transparent border-[#012A50] rounded-full animate-spin" />
           </div>
         ) : isFiltering && currentItems.length === 0 ? (
-          <div className="flex items-center justify-center lg:h-[calc(100vh-14.5rem)] text-lg text-[#012A50]">
+          <div className="flex items-center justify-center h-[calc(100vh-14.5rem)] text-lg text-[#012A50]">
             No data available.
           </div>
         ) : allYachts?.length > 0 ? (
@@ -267,7 +267,7 @@ const YachtsDetail = () => {
                             className="rounded-md w-[54px] h-[44px]"
                           />
                           <div className="absolute inset-0 bg-[#0C0C0C]/70 rounded-md flex items-center justify-center">
-                            <span className="text-white text-sm font-medium">See All</span>
+                            <span className="text-white text-sm font-medium">{yachtItem.galleryImages.length - 6}</span>
                           </div>
                         </div>
                       )}
@@ -285,7 +285,7 @@ const YachtsDetail = () => {
                         €{yachtItem.daytripPriceEuro}
                       </p>
                       <button
-                        className="px-[24px] py-[8px] mt-1 cursor-pointer font-plusjakarta font-extrabold text-[13px] bg-[#001B48] text-white rounded-full"
+                        className="px-[24px] py-[8px] mt-1 cursor-pointer font-plusjakarta font-extrabold text-[13px] bg-[#001B48] hover:bg-[#5F5C63] text-white rounded-full"
                         onClick={(e) => handleDeleteClick(e, yachtItem._id)}
                       >
                         Delete

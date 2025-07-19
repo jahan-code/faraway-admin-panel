@@ -11,7 +11,6 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ menus }) => {
-  
   const location = usePathname();
 
   const isActive = (link: string) => {
@@ -67,6 +66,9 @@ const Sidebar: React.FC<Props> = ({ menus }) => {
                 <div className="absolute bottom-6 w-full pr-4">
                   <Link
                     href={logoutItem.link || ""}
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                    }}
                     className={`flex items-center gap-3 p-2 text-sm font-bold 3xl:text-base capitalize rounded-tl-full rounded-bl-full rounded-tr-2xl rounded-br-2xl hover:bg-blue hover:text-text-[#222222] transition-colors duration-300 ${
                       isActive(logoutItem.link || "")
                         ? "bg-[#001B48] text-white pl-3"
