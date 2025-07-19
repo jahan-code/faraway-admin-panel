@@ -274,7 +274,7 @@ const AddNewYachts: React.FC = () => {
                         key={index}
                         className="col-span-1 sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4"
                       >
-                        <label className="flex items-center gap-2">
+                        <label className="flex items-center gap-2 w-fit">
                           <input
                             type="radio"
                             name="Length Range"
