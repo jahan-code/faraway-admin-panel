@@ -48,6 +48,7 @@ const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange
     currentX: 0,
     currentY: 0,
   })
+  console.log(value)
   const [editorContent, setEditorContent] = useState<string>("") 
 
   useEffect(() => {
