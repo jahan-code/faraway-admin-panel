@@ -9,7 +9,6 @@ import {
 import { MdDeleteOutline } from "react-icons/md";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import RichTextEditor from "./RichTextEditor";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "@/lib/Store/store";
 import { toast, ToastContainer } from "react-toastify";
@@ -20,7 +19,7 @@ import {
   yachtsvalidationSchema,
   FormYachtsValues,
 } from "@/lib/Validation/addyachtsValidationSchema";
-import RichTextEditorOne from "./RichTextEditorOne";
+import RichTextEditor from "./RichTextEditorOne";
 
 type RichTextFieldKey =
   | "Price"
@@ -577,7 +576,7 @@ const AddNewYachts: React.FC = () => {
             <div key={section.id} className="mt-4 grid lg:grid-cols-2 gap-2">
               <p className="font-bold text-[#222222]">{section.label}</p>
               <div className="w-full">
-                <RichTextEditorOne
+                <RichTextEditor
                   value={formik.values[section.label as RichTextFieldKey] ?? ""}
                   onChange={(html) => formik.setFieldValue(section.label, html)}
                 />

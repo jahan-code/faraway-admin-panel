@@ -36,7 +36,7 @@ type RichTextEditorOneProps = {
   onChange: (content: string) => void;
 };
 
-const RichTextEditorOne: React.FC<RichTextEditorOneProps> = ({ value = "", onChange }) => {
+const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange }) => {
   const editorRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
   const [showTableSelector, setShowTableSelector] = useState(false)
@@ -822,4 +822,4 @@ const RichTextEditorOne: React.FC<RichTextEditorOneProps> = ({ value = "", onCha
   )
 }
 
-export default RichTextEditorOne;
+export default RichTextEditor;
