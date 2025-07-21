@@ -41,8 +41,8 @@ export const yachtsvalidationSchema = Yup.object().shape({
     .test("is-file", "Please select a valid file", (value) => {
       return value instanceof File;
     })
-    .test("file-size", "File must be 1MB or smaller", (value) => {
-      return value instanceof File && value.size <= 1 * 1024 * 1024;
+    .test("file-size", "File must be 3MB or smaller", (value) => {
+      return value instanceof File && value.size <= 3 * 1024 * 1024;
     })
     .test("file-type", "Only JPEG, PNG images are allowed", (value) => {
       if (!(value instanceof File)) return false;
