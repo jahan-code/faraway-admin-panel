@@ -37,11 +37,11 @@ export interface AddYachtsPayload {
   waterCapacity: string;
   code?: string;
   title: string;
+  type: string;
   primaryImage: File;
   galleryImages: File[];
 }
 
-// Interface for API response data (where images are string URLs)
 export interface YachtsApiResponse {
   _id: string;
   boatType: string;
@@ -80,6 +80,7 @@ export interface YachtsApiResponse {
   lengthOverall: string;
   fuelCapacity: string;
   waterCapacity: string;
+  type: string;
   code?: string;
   createdAt: string;
   __v: number;

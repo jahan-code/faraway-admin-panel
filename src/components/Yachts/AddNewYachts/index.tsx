@@ -123,6 +123,7 @@ const AddNewYachts: React.FC = () => {
       "Fuel Capacity": "",
       "Water Capacity": "",
       Code: "",
+      "Type": "",
     },
     validationSchema: yachtsvalidationSchema,
     onSubmit: async (values, { setSubmitting }) => {
@@ -167,6 +168,7 @@ const AddNewYachts: React.FC = () => {
             "Fuel Capacity": true,
             "Water Capacity": true,
             Code: true,
+            "Type": true,
           });
           setSubmitting(false);
           return;
@@ -210,6 +212,7 @@ const AddNewYachts: React.FC = () => {
             fuelCapacity: values["Fuel Capacity"],
             waterCapacity: values["Water Capacity"],
             code: values["Code"] ?? "",
+            type: values["Type"],
           })
         );
         if (addYachts.fulfilled.match(resultAction)) {
@@ -246,13 +249,11 @@ const AddNewYachts: React.FC = () => {
             <div key={sectionIndex}>
               {section.section && (
                 <h2
-                  className={`font-bold mb-2 ${
-                    sectionIndex === 0 ? "" : "mt-4"
-                  } ${
-                    sectionIndex !== 1
+                  className={`font-bold mb-2 ${sectionIndex === 0 ? "" : "mt-4"
+                    } ${sectionIndex !== 1
                       ? "text-[#001B48] text-[24px] pb-2 border-b border-[#CCCCCC]"
                       : "text-[#222222]"
-                  }`}
+                    }`}
                 >
                   {section.section}
                 </h2>
@@ -308,7 +309,7 @@ const AddNewYachts: React.FC = () => {
                         {index ===
                           section.fields.filter((f) => f.type === "checkbox")
                             .length -
-                            1 &&
+                          1 &&
                           getFieldError(
                             "Length Range" as keyof FormYachtsValues
                           ) && (
@@ -323,11 +324,10 @@ const AddNewYachts: React.FC = () => {
                   return (
                     <div
                       key={index}
-                      className={`${
-                        isFileUpload
-                          ? "col-span-1 sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4"
-                          : "col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 xl:col-span-1"
-                      }`}
+                      className={`${isFileUpload
+                        ? "col-span-1 sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4"
+                        : "col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 xl:col-span-1"
+                        }`}
                     >
                       <div className="flex items-center gap-1 mb-2">
                         <label className="block font-bold text-[#222222]">
@@ -341,9 +341,8 @@ const AddNewYachts: React.FC = () => {
                       {isDropdown ? (
                         <>
                           <div
-                            className={`bg-[#F0F2F4] rounded-lg px-3 py-2 w-full ${
-                              fieldError ? "border border-[#DB2828]" : ""
-                            }`}
+                            className={`bg-[#F0F2F4] rounded-lg px-3 py-2 w-full ${fieldError ? "border border-[#DB2828]" : ""
+                              }`}
                           >
                             <select
                               name={fieldName}
@@ -353,9 +352,8 @@ const AddNewYachts: React.FC = () => {
                                 formik.setFieldTouched(fieldName, true, false);
                               }}
                               onBlur={formik.handleBlur}
-                              className={`w-full outline-0 cursor-pointer ${
-                                value ? "text-[#222222]" : "text-[#999999]"
-                              }`}
+                              className={`w-full outline-0 cursor-pointer ${value ? "text-[#222222]" : "text-[#999999]"
+                                }`}
                             >
                               <option value="" disabled hidden>
                                 {field.placeholder}
@@ -381,9 +379,8 @@ const AddNewYachts: React.FC = () => {
                       ) : isPrimaryUpload ? (
                         <>
                           <div
-                            className={`text-[#222222] w-full bg-[#F0F2F4] rounded-lg px-3 py-2  ${
-                              fieldError ? "border border-[#DB2828]" : ""
-                            }`}
+                            className={`text-[#222222] w-full bg-[#F0F2F4] rounded-lg px-3 py-2  ${fieldError ? "border border-[#DB2828]" : ""
+                              }`}
                           >
                             {!formik.values["Primary Image"] ? (
                               <input
@@ -430,9 +427,8 @@ const AddNewYachts: React.FC = () => {
                       ) : isFileUpload ? (
                         <>
                           <div
-                            className={`border border-dashed border-[#C4C4C4] bg-white rounded-md py-12 px-4 text-center w-full  ${
-                              fieldError ? "border border-[#DB2828]" : ""
-                            }`}
+                            className={`border border-dashed border-[#C4C4C4] bg-white rounded-md py-12 px-4 text-center w-full  ${fieldError ? "border border-[#DB2828]" : ""
+                              }`}
                           >
                             <div
                               onDrop={handleDrop}
@@ -546,9 +542,8 @@ const AddNewYachts: React.FC = () => {
                               formik.setFieldTouched(fieldName, true, false);
                             }}
                             onBlur={formik.handleBlur}
-                            className={`placeholder:text-[#999999] outline-none text-[#222222] w-full bg-[#F0F2F4] rounded-lg px-3 py-2  ${
-                              fieldError ? "border border-[#DB2828]" : ""
-                            }`}
+                            className={`placeholder:text-[#999999] outline-none text-[#222222] w-full bg-[#F0F2F4] rounded-lg px-3 py-2  ${fieldError ? "border border-[#DB2828]" : ""
+                              }`}
                           />
                           {fieldError && (
                             <p className="text-[#DB2828] text-sm mt-1">
@@ -591,6 +586,10 @@ const AddNewYachts: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-4 gap-4">
                 {section.fields.map((field, index) => {
                   const fieldName = field.label as keyof FormYachtsValues;
+                  const isDropdown = field.type === "dropdown";
+                  const value =
+                    formik.values[field.label as keyof typeof formik.values] ??
+                    "";
                   const fieldError = getFieldError(fieldName);
                   return (
                     <div key={index}>
@@ -598,25 +597,66 @@ const AddNewYachts: React.FC = () => {
                         {field.label}
                       </label>
                       <div>
-                        <input
-                          type="text"
-                          name={fieldName}
-                          placeholder={field.placeholder}
-                          value={formik.values[fieldName] as string}
-                          onChange={(e) => {
-                            formik.handleChange(e);
-                            formik.setFieldTouched(fieldName, true, false);
-                          }}
-                          onBlur={formik.handleBlur}
-                          className={`placeholder:text-[#999999] outline-none text-[#222222] w-full bg-[#F0F2F4] rounded-lg px-3 py-2  ${
-                            fieldError ? "border border-[#DB2828]" : ""
-                          }`}
-                        />
-                        {fieldError && (
-                          <p className="text-[#DB2828] text-sm mt-1">
-                            {typeof formik.errors[fieldName] === "string" &&
-                              formik.errors[fieldName]}
-                          </p>
+                        {isDropdown ? (
+                          <>
+                            <div
+                              className={`bg-[#F0F2F4] rounded-lg px-3 py-2 w-full ${fieldError ? "border border-[#DB2828]" : ""
+                                }`}
+                            >
+                              <select
+                                name={fieldName}
+                                value={formik.values[fieldName] as string}
+                                onChange={(e) => {
+                                  formik.handleChange(e);
+                                  formik.setFieldTouched(fieldName, true, false);
+                                }}
+                                onBlur={formik.handleBlur}
+                                className={`w-full outline-0 cursor-pointer ${value ? "text-[#222222]" : "text-[#999999]"
+                                  }`}
+                              >
+                                <option value="" disabled hidden>
+                                  {field.placeholder}
+                                </option>
+                                {field.options?.map((option) => (
+                                  <option
+                                    key={option}
+                                    value={option}
+                                    className="text-[#222222] outline-0 pt-4"
+                                  >
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            {fieldError && (
+                              <p className="text-[#DB2828] text-sm mt-1">
+                                {typeof formik.errors[fieldName] === "string" &&
+                                  formik.errors[fieldName]}
+                              </p>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            <input
+                              type="text"
+                              name={fieldName}
+                              placeholder={field.placeholder}
+                              value={formik.values[fieldName] as string}
+                              onChange={(e) => {
+                                formik.handleChange(e);
+                                formik.setFieldTouched(fieldName, true, false);
+                              }}
+                              onBlur={formik.handleBlur}
+                              className={`placeholder:text-[#999999] outline-none text-[#222222] w-full bg-[#F0F2F4] rounded-lg px-3 py-2  ${fieldError ? "border border-[#DB2828]" : ""
+                                }`}
+                            />
+                            {fieldError && (
+                              <p className="text-[#DB2828] text-sm mt-1">
+                                {typeof formik.errors[fieldName] === "string" &&
+                                  formik.errors[fieldName]}
+                              </p>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
@@ -630,9 +670,8 @@ const AddNewYachts: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`rounded-full px-[16px] py-[8px] bg-[#001B48] hover:bg-[#222222] text-white flex items-center justify-center font-medium ${
-              loading ? "cursor-not-allowed" : "cursor-pointer"
-            }`}
+            className={`rounded-full px-[16px] py-[8px] bg-[#001B48] hover:bg-[#222222] text-white flex items-center justify-center font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"
+              }`}
           >
             {loading ? "Save ..." : "Save and Continue"}
           </button>

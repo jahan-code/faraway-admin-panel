@@ -35,6 +35,7 @@ export const yachtsvalidationSchema = Yup.object().shape({
   "Length Overall": Yup.string().required("Length Overall is required"),
   "Fuel Capacity": Yup.string().required("Fuel Capacity is required"),
   "Water Capacity": Yup.string().required("Water Capacity is required"),
+  "Type": Yup.string().required("Yacht Type is required"),
   "Code": Yup.string(),
   "Primary Image": Yup.mixed<File>()
     .required("Primary Image is required")
@@ -46,7 +47,7 @@ export const yachtsvalidationSchema = Yup.object().shape({
     })
     .test("file-type", "Only JPEG, PNG images are allowed", (value) => {
       if (!(value instanceof File)) return false;
-      const allowedTypes = ["image/jpeg", "image/png"];
+      const allowedTypes = ["image/jpeg", "image/png"];5
       return allowedTypes.includes(value.type);
     }),
   "Gallery Images": Yup.array<File>()
