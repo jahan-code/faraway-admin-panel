@@ -39,7 +39,15 @@ const AddNewYachts: React.FC = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files[0]) {
-      formik.setFieldValue("Primary Image", files[0]);
+      const file = files[0];
+      if (file.size > 1 * 1024 * 1024) {
+        formik.setFieldTouched("Primary Image", true, false);
+        formik.setFieldError("Primary Image", "File must be 1MB or smaller");
+        e.target.value = "";
+        return;
+      }
+      formik.setFieldValue("Primary Image", file);
+      formik.setFieldError("Primary Image", undefined);
     }
   };
 
@@ -50,29 +58,32 @@ const AddNewYachts: React.FC = () => {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      const existingFiles = Array.isArray(formik.values["Gallery Images"])
-        ? formik.values["Gallery Images"]
-        : [];
-      formik.setFieldValue("Gallery Images", [
-        ...existingFiles,
-        ...Array.from(files),
-      ]);
-      formik.setFieldTouched("Gallery Images", true, false);
+      const existingFiles = Array.isArray(formik.values["Gallery Images"]) ? formik.values["Gallery Images"] : [];
+      const totalFiles = existingFiles.length + files.length;
+      if (totalFiles > 30) {
+        formik.setFieldTouched("Gallery Images", true, false);
+        formik.setFieldError("Gallery Images", "Maximum 30 images allowed");
+        e.target.value = "";
+        return;
+      } else {
+        formik.setFieldValue("Gallery Images", [...existingFiles, ...Array.from(files)]);
+        formik.setFieldError("Gallery Images", undefined);
+      }
     }
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const files = e.dataTransfer.files;
-    if (files && files.length > 0) {
-      const existingFiles = Array.isArray(formik.values["Gallery Images"])
-        ? formik.values["Gallery Images"]
-        : [];
-      formik.setFieldValue("Gallery Images", [
-        ...existingFiles,
-        ...Array.from(files),
-      ]);
-      formik.setFieldTouched("Gallery Images", true, false);
+    if (files && files[0]) {
+      const file = files[0];
+      if (file.size > 1 * 1024 * 1024) {
+        formik.setFieldTouched("Gallery Images", true, false);
+        formik.setFieldError("Gallery Images", "File must be 1MB or smaller");
+        return;
+      }
+      formik.setFieldValue("Gallery Images", file);
+      formik.setFieldError("Gallery Images", undefined);
     }
   };
 
