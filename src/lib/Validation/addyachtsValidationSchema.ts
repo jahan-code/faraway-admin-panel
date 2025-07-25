@@ -47,7 +47,7 @@ export const yachtsvalidationSchema = Yup.object().shape({
     })
     .test("file-type", "Only JPEG, PNG images are allowed", (value) => {
       if (!(value instanceof File)) return false;
-      const allowedTypes = ["image/jpeg", "image/png"];5
+      const allowedTypes = ["image/jpeg", "image/png"];
       return allowedTypes.includes(value.type);
     }),
   "Gallery Images": Yup.array<File>()
