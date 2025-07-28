@@ -18,7 +18,10 @@ import {
   yachtsvalidationSchema,
   FormYachtsValues,
 } from "@/lib/Validation/addyachtsValidationSchema";
-import RichTextEditor from "./RichTextEditor";
+// import RichTextEditor from "./RichTextEditor";
+// import { Editor } from "react-draft-wysiwyg";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import Editor from "./Editor";
 
 type RichTextFieldKey =
   | "Price"
@@ -576,10 +579,20 @@ const AddNewYachts: React.FC = () => {
             <div key={section.id} className="mt-4 grid lg:grid-cols-2 gap-2">
               <p className="font-bold text-[#222222]">{section.label}</p>
               <div className="w-full">
-                <RichTextEditor
+                {/* <Editor
+                  value={formik.values[section.label as RichTextFieldKey] ?? ""}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="wrapperClassName"
+                  editorClassName="editorClassName"
+                /> */}
+                <Editor 
+                value={formik.values[section.label as RichTextFieldKey] ?? ""}
+                onChange={(html) => formik.setFieldValue(section.label, html)}
+                />
+                {/* <RichTextEditor
                   value={formik.values[section.label as RichTextFieldKey] ?? ""}
                   onChange={(html) => formik.setFieldValue(section.label, html)}
-                />
+                /> */}
               </div>
             </div>
           );
