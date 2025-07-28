@@ -5,7 +5,7 @@ import {
   RichTextEditorSections,
   YachtsData,
 } from "@/data/Yachts";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline, MdKeyboardArrowLeft } from "react-icons/md";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,7 +37,6 @@ const AddNewYachts: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const loading = useSelector((state: RootState) => state.yachts.addLoading);
-
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -585,9 +584,9 @@ const AddNewYachts: React.FC = () => {
                   wrapperClassName="wrapperClassName"
                   editorClassName="editorClassName"
                 /> */}
-                <Editor 
-                value={formik.values[section.label as RichTextFieldKey] ?? ""}
-                onChange={(html) => formik.setFieldValue(section.label, html)}
+                <Editor
+                  value={formik.values[section.label as RichTextFieldKey] ?? ""}
+                  onChange={(html) => formik.setFieldValue(section.label, html)}
                 />
                 {/* <RichTextEditor
                   value={formik.values[section.label as RichTextFieldKey] ?? ""}
@@ -690,7 +689,11 @@ const AddNewYachts: React.FC = () => {
             </div>
           );
         })}
-        <div className="mt-6 flex justify-end">
+        <div className="mt-6 flex items-center justify-between">
+          <button onClick={() => router.push("/yachts")} className="rounded-full px-[16px] py-[7px] border border-[#666666] text-[#222222] flex items-center gap-1 justify-center cursor-pointer font-medium">
+            <MdKeyboardArrowLeft />
+            Back
+          </button>
           <button
             type="submit"
             disabled={loading}
