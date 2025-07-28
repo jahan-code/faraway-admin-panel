@@ -15,6 +15,7 @@ const screenMap: Record<string, { name: string; Icon: React.FC }> = {
   "/dashboard": { name: "Dashboard", Icon: Grid },
   "/yachts": { name: "Yachts", Icon: FaSailboat },
   "/yachts/addnewyachts": { name: "Yachts", Icon: FaSailboat },
+  "/yachts/id": { name: "Yachts", Icon: FaSailboat },
   "/settings": { name: "Settings", Icon: Settings },
 };
 
@@ -44,10 +45,12 @@ const Header: React.FC = () => {
   };
 
   const pathname = usePathname();
-  const screenKey = pathname;
-  if (!["/yachts", "/yachts/addnewyachts"].includes(pathname) &&
-    /^\/yachts\/[^/]+$/.test(pathname)) {
+  
+  let screenKey = pathname;
+  if (/^\/yachts\/[^/]+$/.test(pathname) && pathname !== "/yachts" && pathname !== "/yachts/addnewyachts") {
+    screenKey = "/yachts/id";
   }
+  
   const screen = screenMap[screenKey];
 
   return (
