@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -8,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import BreadCrum from "./BreadCrum";
 import { useSelector, useDispatch } from "react-redux";
-import { getYachts, deleteYachts } from "@/lib/Features/Yachts/addyachtsSlice";
+import { getYachts, deleteYachts } from "@/lib/Features/Yachts/yachtsSlice";
 import type { RootState, AppDispatch } from '@/lib/Store/store';
 import { CiCalendar } from "react-icons/ci";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -30,6 +31,7 @@ const YachtsDetail = () => {
   const itemsPerPage = 10;
   const [yachtsToDelete, setYachtsToDelete] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(getYachts({ page: currentPages, limit: itemsPerPage }));
@@ -164,7 +166,7 @@ const YachtsDetail = () => {
                 },
               ];
               return (
-                <div key={yachtIndex} className="bg-white border border-[#CECECE] rounded-lg shadow-md px-[8px] py-[8px] flex gap-4 items-center overflow-hidden">
+                <div key={yachtIndex} className="bg-white cursor-pointer border border-[#CECECE] rounded-lg shadow-md px-[8px] py-[8px] flex gap-4 items-center overflow-hidden" onClick={() => router.push(`/yachts/${yachtItem._id}`)}>
                   <div className="hidden md:block relative w-[37%] overflow-hidden">
                     {yachtItem.galleryImages?.length > 1 ? (
                       <div className="relative">
@@ -284,12 +286,21 @@ const YachtsDetail = () => {
                       <p className="text-[#C3974C] font-plusjakarta font-extrabold text-[23px]">
                         €{yachtItem.daytripPriceEuro}
                       </p>
-                      <button
-                        className="px-[24px] py-[8px] mt-1 cursor-pointer font-plusjakarta font-extrabold text-[13px] bg-[#001B48] hover:bg-[#5F5C63] text-white rounded-full"
-                        onClick={(e) => handleDeleteClick(e, yachtItem._id)}
-                      >
-                        Delete
-                      </button>
+                      <div className="flex items-center gap-2 mt-1">
+                        <button
+                          className="px-[24px] py-[8px] cursor-pointer font-plusjakarta font-extrabold text-[13px] bg-[#001B48] hover:bg-[#5F5C63] text-white rounded-full"
+                          onClick={() => router.push(`/yachts/${yachtItem._id}`)}
+                        >
+                          View
+                        </button>
+                        <button
+                          className="px-[24px] py-[8px] cursor-pointer font-plusjakarta font-extrabold text-[13px] bg-[#001B48] hover:bg-[#5F5C63] text-white rounded-full"
+                          onClick={(e) => handleDeleteClick(e, yachtItem._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+
                     </div>
                   </div>
                 </div>

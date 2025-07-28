@@ -202,6 +202,72 @@ export const getYachts = createAsyncThunk<
   }
 );
 
+export const getYachtsById = createAsyncThunk(
+  "yachts/getYachtsById",
+  async (
+      { yachtsId }: { yachtsId: string },
+      { rejectWithValue }
+  ) => {
+      try {
+          const token = localStorage.getItem("token");
+          const response = await axios.get(
+              `https://faraway.thedevapp.online/yacht?id=${yachtsId}`,
+              {
+                  withCredentials: true,
+                  headers: {
+                      Authorization: `Bearer ${token}`,
+                  },
+              }
+          );
+          return {
+              yachts: response.data.data
+          };
+      } catch (error: unknown) {
+          const axiosError = error as AxiosError<{ message: string }>;
+          const message =
+              axiosError.response?.data?.message ||
+              axiosError.message ||
+              "Something went wrong";
+          return rejectWithValue({ error: { message } });
+      }
+  }
+);
+
+export const updateYachts = createAsyncThunk(
+  "yachts/updateYachts",
+  async ({ payload, yachtsId }: { payload: AddYachtsPayload; yachtsId: string },
+      { rejectWithValue }) => {
+      try {
+          const token = localStorage.getItem("token");
+          const response = await axios.put(
+              `https://faraway.thedevapp.online/yacht/edit-yacht?id=${yachtsId}`,
+              payload,
+              {
+                  withCredentials: true,
+                  headers: {
+                      Authorization: `Bearer ${token}`,
+                      "Content-Type": "multipart/form-data",
+                  },
+              }
+          );
+          if (response?.data.error) {
+              throw new Error(
+                  response?.data?.error?.message || "Something went wrong"
+              );
+          }
+          return response.data.data;
+      } catch (error: unknown) {
+          const axiosError = error as AxiosError<{ message: string }>;
+          const message =
+              axiosError.response?.data?.message ||
+              axiosError.message ||
+              "Something went wrong";
+          return rejectWithValue({ error: { message } });
+      }
+  }
+);
+
+
 // Delete Yacht
 export const deleteYachts = createAsyncThunk<
   { success: boolean; id: string },
@@ -284,6 +350,37 @@ const yachtsSlice = createSlice({
         state.getLoading = false;
         const payload = action.payload as { error: { message: string } };
         state.error = payload?.error?.message || "Failed to get yachts.";
+      })
+
+      // Get Yacht by ID
+      .addCase(getYachtsById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getYachtsById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.yachts = action.payload.yachts;
+        state.error = null;
+      })
+      .addCase(getYachtsById.rejected, (state, action) => {
+        state.loading = false;
+        const payload = action.payload as { error: { message: string } };
+        state.error = payload?.error?.message || "Failed to get yacht by ID.";
+      })
+      // Update Yacht
+      .addCase(updateYachts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateYachts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.yachts = action.payload;
+        state.error = null;
+      })
+      .addCase(updateYachts.rejected, (state, action) => {
+        state.loading = false;
+        const payload = action.payload as { error: { message: string } };
+        state.error = payload?.error?.message || "Failed to update yacht.";
       })
       // Delete Yacht
       .addCase(deleteYachts.pending, (state) => {

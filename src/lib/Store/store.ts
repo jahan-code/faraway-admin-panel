@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import AuthReducer from "@/lib/Features/Auth/authSlice";
-import YachtsReducer from "@/lib/Features/Yachts/addyachtsSlice"
+import YachtsReducer from "@/lib/Features/Yachts/yachtsSlice"
 
 export const makeStore = () => {
   return configureStore({

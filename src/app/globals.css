@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 body {
   background: white;
@@ -23,4 +22,14 @@ body {
 .scrollbar-hide {
   scrollbar-width: thin;
   scrollbar-color: white transparent;
+}
+
+.fr-box.fr-basic .fr-wrapper{
+  border-bottom-color: #ccc !important;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+
+.fr-second-toolbar {
+  display: none !important;
 }

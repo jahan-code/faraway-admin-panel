@@ -13,7 +13,7 @@ import type { RootState, AppDispatch } from "@/lib/Store/store";
 import { toast, ToastContainer } from "react-toastify";
 import { useFormik } from "formik";
 import "react-toastify/dist/ReactToastify.css";
-import { addYachts } from "@/lib/Features/Yachts/addyachtsSlice";
+import { addYachts } from "@/lib/Features/Yachts/yachtsSlice";
 import {
   yachtsvalidationSchema,
   FormYachtsValues,
