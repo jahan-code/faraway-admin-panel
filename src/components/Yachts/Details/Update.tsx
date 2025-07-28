@@ -7,7 +7,6 @@ import {
     YachtsData,
 } from "@/data/Yachts";
 import Image from "next/image";
-// import Tick from "@/icons/Tick";
 import { useSelector, useDispatch } from "react-redux";
 import { updateYachts } from "@/lib/Features/Yachts/yachtsSlice";
 import type { AppDispatch, RootState } from '@/lib/Store/store';
@@ -20,13 +19,14 @@ import {
 } from "@/lib/Validation/addyachtsValidationSchema";
 import Editor from "../AddNewYachts/Editor";
 import { MdDeleteOutline } from "react-icons/md";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+
 
 interface CustomerProps {
     goToPrevTab: () => void;
     id: string | number;
 }
 
-// Add interface for image handling
 interface ImageItem {
     type: 'url' | 'file';
     value: string | File;
@@ -221,8 +221,6 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                     setSubmitting(false);
                     return;
                 }
-
-                // Process images for submission
                 const galleryImages = Array.isArray(values["Gallery Images"])
                     ? values["Gallery Images"].map((item: ImageItem) => {
                         if (item.type === 'file') {
@@ -232,7 +230,6 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                         }
                     })
                     : [];
-
                 const resultAction = await dispatch(
                     updateYachts({
                         payload: {
@@ -760,7 +757,7 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                 })}
                 <div className="mt-3 flex justify-between">
                     <button onClick={goToPrevTab} className="rounded-full px-[16px] py-[7px] border border-[#666666] text-[#222222] flex items-center gap-1 justify-center cursor-pointer font-medium">
-                        {/* {section.icon && <section.icon />} */}
+                        <MdKeyboardArrowLeft />
                         Back
                     </button>
                     <button type="submit" disabled={loading} className={`rounded-full px-[16px] py-[8px] bg-[#001B48] hover:bg-[#222222] text-white flex items-center justify-center font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"
