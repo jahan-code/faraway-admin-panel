@@ -17,7 +17,7 @@ const YachtsDetail: React.FC<VendorsProps> = ({ id }) => {
 
     useEffect(() => {
         if (activeIndex === 0) {
-            setShowGeneralInfo(false);
+            setActiveIndex(0);
         }
     }, [activeIndex]);
 
