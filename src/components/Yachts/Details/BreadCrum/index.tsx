@@ -1,10 +1,8 @@
 "use client"
 
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
-import { getYachtsById } from "@/lib/Features/Yachts/yachtsSlice";
-import type { AppDispatch, RootState } from '@/lib/Store/store';
+import { useSelector } from "react-redux";
+import type { RootState } from '@/lib/Store/store';
 import { FaSailboat } from "react-icons/fa6";
 
 interface InventoryDetailProps {
@@ -14,13 +12,7 @@ interface InventoryDetailProps {
 const BreadCrum: React.FC<InventoryDetailProps> = ({ id }) => {
 
     const router = useRouter();
-    const dispatch = useDispatch<AppDispatch>();
     const { yachts } = useSelector((state: RootState) => state.yachts);
-
-    useEffect(() => {
-        dispatch(getYachtsById({ yachtsId: id as string }));
-    }, [id, dispatch]);
-
 
     return (
         <div className="flex justify-between items-center bg-white shadow-xs rounded-2xl px-3 py-5">

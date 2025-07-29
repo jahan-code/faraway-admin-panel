@@ -297,7 +297,7 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
 
     return (
         <>
-            <form onSubmit={formik.handleSubmit} className="mt-3">
+            <form onSubmit={formik.handleSubmit} className="mt-4">
                 {NewYachtsData.map((section, sectionIndex) => {
                     return (
                         <div key={sectionIndex}>

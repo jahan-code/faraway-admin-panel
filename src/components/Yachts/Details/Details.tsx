@@ -29,22 +29,27 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
             array: [
                 { label: "Title", data: yachts?.title || "N/A" },
                 { label: "Boat Type", data: yachts?.boatType || "N/A" },
-                { label: "Category", data: yachts?.price || "N/A" },
-                { label: "Length", data: `${yachts?.length}ft` || "N/A" },
-                { label: "Cabin", data: yachts?.cabins || "N/A" },
-                { label: "Bathroom", data: yachts?.bathrooms || "N/A" },
                 { label: "Yacht Type", data: yachts?.type || "N/A" },
+                { label: "Category", data: yachts?.price || "N/A" },
+                { label: "Capacity", data: yachts?.capacity || "N/A" },
+                { label: "Length", data: `${yachts?.length}ft` || "N/A" },
+                { label: "Cabins", data: yachts?.cabins || "N/A" },
+                { label: "Bathrooms", data: yachts?.bathrooms || "N/A" },
+                { label: "Passenger Day Trip", data: yachts?.passengerDayTrip || "N/A" },
+                { label: "Passenger Overnight", data: yachts?.passengerOvernight || "N/A" },
+                { label: "Guests", data: yachts?.guests || "N/A" },
+                { label: "Guests Range", data: yachts?.guestsRange || "N/A" },
+                { label: "Day Trip Price", data: yachts?.dayTripPrice || "N/A" },
+                { label: "Overnight Price", data: yachts?.overnightPrice || "N/A" },
                 { label: "Day Trip Price Euro", data: `${yachts?.daytripPriceEuro}€` || "N/A" },
                 { label: "Badge", optional: "(Optional)", data: yachts?.badge || "N/A" },
-                { label: "Built", data: yachts?.built || "N/A" },
-                { label: "Capacity", data: yachts?.capacity || "N/A" },
+                { label: "Built", optional: "(Optional)", data: yachts?.built || "N/A" },
+                { label: "Design", optional: "(Optional)", data: yachts?.design || "N/A" },
+                { label: "Cruising Speed", optional: "(Optional)", data: yachts?.cruisingSpeed || "N/A" },
+                { label: "Length Overall", optional: "(Optional)", data: yachts?.lengthOverall || "N/A" },
+                { label: "Fuel Capacity", optional: "(Optional)", data: yachts?.fuelCapacity || "N/A" },
+                { label: "Water Capacity", optional: "(Optional)", data: yachts?.waterCapacity || "N/A" },
                 { label: "Code", optional: "(Optional)", data: yachts?.code || "N/A" },
-                { label: "Created At", data: formatDateToDDMMYY(yachts?.createdAt || "N/A") },
-                { label: "Cruising Speed", data: yachts?.cruisingSpeed || "N/A" },
-                { label: "Day Trip Price", data: yachts?.dayTripPrice || "N/A" },
-                // // { label: "Day Trip Price THB", data: yachts?.daytripPriceTHB || "N/A" },
-                // { label: "Day Trip Price USD", data: yachts?.daytripPriceUSD || "N/A" },
-                { label: "Design", data: yachts?.design || "N/A" },
                 { label: "Video Link", data: yachts?.videoLink || "N/A" },
             ],
             iconone: MdKeyboardArrowLeft,
@@ -56,44 +61,38 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
 
     return (
         <div className="">
-            {loading ? (
-                <div className="flex items-center justify-center lg:h-[calc(100vh-265px)]">
-                    <div className="w-10 h-10 border-3 border-t-transparent border-[#2185D0] rounded-full animate-spin" />
-                </div>
-            ) : (
-                GeneralInfoData.map((section, Idx) => (
-                    <div key={Idx}>
-                        {section.array && (
-                            <div className="grid md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
-                                {section.array.map((item, idx) => (
-                                    <div key={idx} className="flex">
-                                        <div className="flex items-center gap-1 w-1/2">
-                                            <span className="text-[#222222] font-bold">{item.label}</span>
-                                            <span className="text-[#222222] font-normal text-[14px]">{item.optional}</span>
-                                        </div>
-                                        <span className="font-inter font-medium text-[#222222] w-1/2 break-words">{item.data}</span>
+            {GeneralInfoData.map((section, Idx) => (
+                <div key={Idx}>
+                    {section.array && (
+                        <div className="grid md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                            {section.array.map((item, idx) => (
+                                <div key={idx} className="flex">
+                                    <div className="flex items-center gap-1 w-1/2">
+                                        <span className="text-[#222222] font-bold">{item.label}</span>
+                                        <span className="text-[#222222] font-normal text-[14px]">{item.optional}</span>
                                     </div>
-                                ))}
-                            </div>
-                        )}
-                        {(section.btn || section.btnone) && (
-                            <div className="mt-3 flex justify-between">
-                                {section.btn &&
-                                    <button onClick={() => router.push('/yachts')} className="rounded-full px-[16px] py-[7px] border border-[#666666] text-[#222222] flex items-center gap-1 justify-center cursor-pointer font-medium">
-                                        {section.iconone && <section.iconone />}
-                                        {section.btn}
-                                    </button>}
-                                {section.btnone &&
-                                    <button onClick={goToNextTab} className="rounded-full px-[16px] py-[7px] bg-[#012A50] hover:bg-[#5F5C63] text-white text-center cursor-pointer font-medium flex items-center gap-2">
-                                        {section.icon && <section.icon />}
-                                        {section.btnone}
-                                    </button>
-                                }
-                            </div>
-                        )}
-                    </div>
-                ))
-            )}
+                                    <span className="font-inter font-medium text-[#222222] w-1/2 break-words">{item.data}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    {(section.btn || section.btnone) && (
+                        <div className="mt-3 flex justify-between">
+                            {section.btn &&
+                                <button onClick={() => router.push('/yachts')} className="rounded-full px-[16px] py-[7px] border border-[#666666] text-[#222222] flex items-center gap-1 justify-center cursor-pointer font-medium">
+                                    {section.iconone && <section.iconone />}
+                                    {section.btn}
+                                </button>}
+                            {section.btnone &&
+                                <button onClick={goToNextTab} className="rounded-full px-[16px] py-[7px] bg-[#012A50] hover:bg-[#5F5C63] text-white text-center cursor-pointer font-medium flex items-center gap-2">
+                                    {section.icon && <section.icon />}
+                                    {section.btnone}
+                                </button>
+                            }
+                        </div>
+                    )}
+                </div>
+            ))}
         </div>
     )
 }

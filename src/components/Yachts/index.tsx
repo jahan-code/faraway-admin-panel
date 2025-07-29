@@ -7,12 +7,12 @@ import BreadCrum from "./BreadCrum";
 import { useSelector, useDispatch } from "react-redux";
 import { getYachts, deleteYachts } from "@/lib/Features/Yachts/yachtsSlice";
 import type { RootState, AppDispatch } from '@/lib/Store/store';
-import { CiCalendar } from "react-icons/ci";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlineBathroom, MdClose } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { FaSailboat } from "react-icons/fa6";
 
 const YachtsDetail = () => {
 
@@ -120,8 +120,8 @@ const YachtsDetail = () => {
                 },
                 {
                   id: 3,
-                  icon: CiCalendar,
-                  label: yachtItem?.built ?? null,
+                  icon: FaSailboat,
+                  label: yachtItem?.boatType ?? null,
                 },
               ];
               const Cabins = [

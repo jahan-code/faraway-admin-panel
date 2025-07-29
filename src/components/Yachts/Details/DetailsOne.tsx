@@ -6,6 +6,19 @@ import type { RootState } from '@/lib/Store/store';
 import { IoEyeOutline } from "react-icons/io5";
 
 
+function getEmbedUrl(url?: string) {
+    if (!url) return '';
+    const youtubeMatch = url.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([\w-]+)/);
+    if (youtubeMatch) {
+        return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+    }
+    const youtuBeMatch = url.match(/(?:https?:\/\/)?youtu\.be\/([\w-]+)/);
+    if (youtuBeMatch) {
+        return `https://www.youtube.com/embed/${youtuBeMatch[1]}`;
+    }
+    return url;
+}
+
 const Yachts: React.FC = () => {
 
     const { yachts } = useSelector((state: RootState) => state.yachts);
@@ -87,6 +100,26 @@ const Yachts: React.FC = () => {
                     >
                         See All <IoEyeOutline />
                     </button>
+                </div>
+            </div>
+            <div className="bg-white shadow-xs rounded-lg px-2 py-2 w-full">
+                <p className="text-[#001B48] font-bold text-[18px] mb-2 pb-2 border-b border-[#CCCCCC]">
+                    Video URL
+                </p>
+                <div className="border border-[#CCCCCC] p-1.5 rounded-lg flex justify-center">
+                    {yachts?.videoLink ? (
+                        <iframe
+                            src={getEmbedUrl(yachts.videoLink)}
+                            width="296"
+                            height="158"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                            allowFullScreen
+                            className="rounded-lg w-full"
+                            title="Yacht Video"
+                        />
+                    ) : (
+                        <p className="text-gray-500 p-4">No featured video</p>
+                    )}
                 </div>
             </div>
         </div>
