@@ -31,7 +31,7 @@ const BreadCrum: React.FC<InventoryDetailProps> = ({ id }) => {
                 </div>
             </div>
             <button onClick={() => router.push('/yachts/addnewyachts')} className="px-[16px] py-[7px] rounded-full bg-[#012A50] hover:bg-[#5F5C63] text-center font-medium text-white cursor-pointer hover:text-white">
-                + Add New Vendor
+                + Add New Yachts
             </button>
         </div>
     );

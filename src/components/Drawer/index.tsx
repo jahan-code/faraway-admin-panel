@@ -1,5 +1,8 @@
+"use client";
+
+import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { SidebarMenu } from "@/data/Sidebar/menu";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -11,11 +14,21 @@ interface Props {
 }
 const Drawer: React.FC<Props> = ({ menus, isOpen, onClose }) => {
 
+    const router = useRouter();
     const location = usePathname();
 
     const isActive = (link: string) => {
         if (link === "/") return location === "/";
         return location.startsWith(link);
+    };
+
+    const handleNavigation = (link?: string, isLogout = false) => {
+        if (isLogout) {
+            localStorage.removeItem("token");
+        }
+        if (link) {
+            router.push(link);
+        }
     };
 
     return (
@@ -51,9 +64,10 @@ const Drawer: React.FC<Props> = ({ menus, isOpen, onClose }) => {
                                 <ul className="space-y-4">
                                     {nonLogoutItems.map((item) => (
                                         <li key={item.id}>
-                                            <Link
-                                                href={item.link || ""}
-                                                className={`flex items-center gap-3 p-2 text-sm font-bold 3xl:text-base capitalize rounded-tl-full rounded-bl-full rounded-tr-2xl rounded-br-2xl hover:bg-blue hover:text-text-[#222222] transition-colors duration-300 ${isActive(item.link || "")
+                                            <button
+                                                type="button"
+                                                onClick={() => handleNavigation(item.link)}
+                                                className={`flex w-full cursor-pointer items-center gap-3 p-2 text-sm font-bold 3xl:text-base capitalize rounded-tl-full rounded-bl-full rounded-tr-2xl rounded-br-2xl hover:bg-blue hover:text-text-[#222222] transition-colors duration-300 ${isActive(item.link || "")
                                                     ? "bg-[#001B48] text-white pl-3"
                                                     : "text-[#222222]"
                                                     }`}
@@ -64,15 +78,16 @@ const Drawer: React.FC<Props> = ({ menus, isOpen, onClose }) => {
                                                     </span>
                                                 )}
                                                 <span>{item.title}</span>
-                                            </Link>
+                                            </button>
                                         </li>
                                     ))}
                                 </ul>
                                 {logoutItem && (
                                     <div className="absolute bottom-6 w-full pr-4">
-                                        <Link
-                                            href={logoutItem.link || ""}
-                                            className={`flex items-center gap-3 p-2 text-sm font-bold 3xl:text-base capitalize rounded-tl-full rounded-bl-full rounded-tr-2xl rounded-br-2xl hover:bg-blue hover:text-text-[#222222] transition-colors duration-300 ${isActive(logoutItem.link || "")
+                                        <button
+                                            type="button"
+                                            onClick={() => handleNavigation(logoutItem.link, true)}
+                                            className={`flex w-full cursor-pointer items-center gap-3 p-2 text-sm font-bold 3xl:text-base capitalize rounded-tl-full rounded-bl-full rounded-tr-2xl rounded-br-2xl hover:bg-blue hover:text-text-[#222222] transition-colors duration-300 ${location === "/"
                                                 ? "bg-[#001B48] text-white pl-3"
                                                 : "text-[#222222]"
                                                 }`}
@@ -83,7 +98,7 @@ const Drawer: React.FC<Props> = ({ menus, isOpen, onClose }) => {
                                                 </span>
                                             )}
                                             <span>{logoutItem.title}</span>
-                                        </Link>
+                                        </button>
                                     </div>
                                 )}
                             </div>

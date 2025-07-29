@@ -93,14 +93,11 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
             const existingImages = Array.isArray(formik.values["Gallery Images"]) ? formik.values["Gallery Images"] : [];
             const newFiles = Array.from(files).map(file => ({ type: 'file' as const, value: file }));
             const totalImages = existingImages.length + newFiles.length;
-
             if (totalImages > 30) {
                 formik.setFieldTouched("Gallery Images", true, false);
                 formik.setFieldError("Gallery Images", "Maximum 30 images allowed");
                 return;
             }
-
-            // Check file size for each dropped file
             for (const file of files) {
                 if (file.size > 1 * 1024 * 1024) {
                     formik.setFieldTouched("Gallery Images", true, false);
@@ -108,7 +105,6 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                     return;
                 }
             }
-
             formik.setFieldValue("Gallery Images", [...existingImages, ...newFiles]);
             formik.setFieldError("Gallery Images", undefined);
         }
@@ -122,7 +118,6 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
         formik.setFieldValue("Gallery Images", images);
     };
 
-    // Convert existing image URLs to ImageItem format
     const convertExistingImages = (images: string[] | undefined): ImageItem[] => {
         if (!Array.isArray(images)) return [];
         return images.map((url, index) => ({
@@ -761,7 +756,7 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                         Back
                     </button>
                     <button type="submit" disabled={loading} className={`rounded-full px-[16px] py-[8px] bg-[#001B48] hover:bg-[#222222] text-white flex items-center justify-center font-medium ${loading ? "cursor-not-allowed" : "cursor-pointer"
-                        }`} >
+                        }`}>
                         {loading ? "Update ..." : "Update"}
                     </button>
                 </div>

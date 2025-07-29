@@ -70,7 +70,7 @@ export const yachtsvalidationSchema = Yup.object().shape({
     })
 });
 
-// Validation schema for yacht updates that can handle both existing URLs and new files
+
 export const yachtsUpdateValidationSchema = Yup.object().shape({
   "Title": Yup.string().required("Title is required"),
   "Boat Type": Yup.string().required("Boat Type is required"),
