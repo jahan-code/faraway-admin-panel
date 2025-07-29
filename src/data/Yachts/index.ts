@@ -22,6 +22,8 @@ export const NewYachtsData: NewYachtsFormSection[] = [
   {
     section: "General",
     fields: [
+      { label: "Type", placeholder: "select type", type: "dropdown",  options: ["crewed", "bareboat"]},
+      { label: "Title", placeholder: "e.g,. Luxury" },
       {
         label: "Boat Type",
         placeholder: "e.g,. Power",
@@ -41,6 +43,15 @@ export const NewYachtsData: NewYachtsFormSection[] = [
           "Luxury",
         ],
       },
+    ],
+  },
+  {
+    section: "Length Range",
+    fields: [
+      { label: "< 40", type: "checkbox" },
+      { label: "40 To 60", type: "checkbox" },
+      { label: "60 To 80", type: "checkbox" },
+      { label: "> 80", type: "checkbox" },
       {
         label: "Capacity",
         placeholder: "e.g,. Day Charter",
@@ -51,17 +62,7 @@ export const NewYachtsData: NewYachtsFormSection[] = [
           "Day & Overnight Charter",
         ],
       },
-      { label: "Length", placeholder: "e.g,. 35sq" },
-    ],
-  },
-  {
-    section: "Length Range",
-    fields: [
-      { label: "< 40", type: "checkbox" },
-      { label: "40 To 60", type: "checkbox" },
-      { label: "60 To 80", type: "checkbox" },
-      { label: "> 80", type: "checkbox" },
-      { label: "Title", placeholder: "e.g,. Luxury" },
+      { label: "Length", placeholder: "e.g,. 35ft" },
       { label: "Cabins", placeholder: "e.g,. 1" },
       { label: "Bathrooms", placeholder: "e.g,. 2" },
       { label: "Passenger Day Trip", placeholder: "e.g,. 1" },
@@ -83,9 +84,9 @@ export const NewYachtsData: NewYachtsFormSection[] = [
       { label: "Day Trip Price", placeholder: "e.g,. 30,000 DTP" },
       { label: "Overnight Price", placeholder: "e.g,. 30,000 OP" },
       { label: "Daytrip Price (Euro)", placeholder: "e.g,. 800 EUR" },
+      { label: "Primary Image", placeholder: "" },
       // { label: "Daytrip Price (THB)", placeholder: "e.g,. 800 THB" },
       // { label: "Daytrip Price (USD)", placeholder: "e.g,. 800 USD" },
-      { label: "Primary Image", placeholder: "" },
       {
         label: "Video Link",
         placeholder: "e.g,. http://www.youtube.com",
@@ -103,7 +104,6 @@ export const NewYachtsData: NewYachtsFormSection[] = [
       { label: "Fuel Capacity", placeholder: "" },
       { label: "Water Capacity", placeholder: "" },
       { label: "Code", placeholder: "" },
-      { label: "Type", placeholder: "select type", type: "dropdown",  options: ["crewed", "bareboat"]},
       { label: "Gallery Images", placeholder: "" },
     ],
   },

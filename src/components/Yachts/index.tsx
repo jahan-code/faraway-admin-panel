@@ -111,7 +111,7 @@ const YachtsDetail = () => {
                 {
                   id: 1,
                   img: "/images/Home/featured-ft.svg",
-                  label: yachtItem?.lengthRange ? `${yachtItem.lengthRange.replace(/[<>]/g, "")} ft` : null,
+                  label: yachtItem?.length ? `${yachtItem.length} ft` : null,
                 },
                 {
                   id: 2,
@@ -146,54 +146,6 @@ const YachtsDetail = () => {
                       height={258}
                       className="w-full h-[260px] object-cover rounded-lg"
                     />
-                    {/* {yachtItem.galleryImages?.length > 1 ? (
-                      <div className="relative">
-                        <Slider ref={sliderRef} {...settings}>
-                          {yachtItem.galleryImages.map((imgSrc, index) => (
-                            <div key={index}>
-                              <Image
-                                src={imgSrc}
-                                alt={`Yacht image ${index + 1}`}
-                                width={300}
-                                height={258}
-                                className="w-full h-[260px] object-cover rounded-lg"
-                                priority={index === 0}
-                                unoptimized={true}
-                              />
-                            </div>
-                          ))}
-                        </Slider>
-                        <div className="flex gap-2 absolute left-1/3 bottom-[1.3rem]">
-                          {yachtItem.galleryImages.slice(0, 4).map((_, idx) => (
-                            <button
-                              key={idx}
-                              className={`w-[24px] h-[3px] cursor-pointer rounded-md bg-[#B0B0B0] ${idx === activeSlide ? "bg-white" : ""
-                                }`}
-                              onClick={() => sliderRef.current?.slickGoTo(idx)}
-                            ></button>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="relative">
-                        <Image
-                          src={yachtItem.galleryImages?.[0] || "/default.jpg"}
-                          alt="Yacht image"
-                          width={300}
-                          height={258}
-                          className="w-full h-[220px] object-cover"
-                          unoptimized={true}
-                        />
-                      </div>
-                    )}
-                    <div className="absolute top-2 right-2 text-[#F7F7F7]/50 text-[24px] cursor-pointer"
-                      onClick={() => toggleFavorite(yachtIndex, yachtIndex)}>
-                      {favorites[yachtIndex]?.[yachtIndex] ? (
-                        <FaHeart className="text-[#C3974C]" />
-                      ) : (
-                        <FaRegHeart />
-                      )}
-                    </div> */}
                   </div>
                   <div className="pt-[4px] border-r border-[#D1D1D1] pr-5 w-[70%]">
                     <h3 className="font-plusjakarta font-extrabold text-[19px] text-[#0061B1]">{yachtItem.title}</h3>
