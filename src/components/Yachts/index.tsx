@@ -1,12 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
 import BreadCrum from "./BreadCrum";
 import { useSelector, useDispatch } from "react-redux";
 import { getYachts, deleteYachts } from "@/lib/Features/Yachts/yachtsSlice";
@@ -20,11 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const YachtsDetail = () => {
 
-  const [favorites, setFavorites] = useState<Record<number, Record<number, boolean>>>({});
-  const [activeSlide, setActiveSlide] = useState(0);
-  const sliderRef = useRef<InstanceType<typeof Slider> | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  console.log(searchTerm)
   const dispatch = useDispatch<AppDispatch>();
   const { allYachts, getLoading, totalPages, total } = useSelector((state: RootState) => state.yachts);
   const [currentPages, setCurrentPages] = useState(1);
@@ -37,27 +29,6 @@ const YachtsDetail = () => {
     dispatch(getYachts({ page: currentPages, limit: itemsPerPage }));
   }, [currentPages, itemsPerPage, dispatch]);
 
-  const toggleFavorite = (itemId: number, imgIndex: number) => {
-    setFavorites((prev) => ({
-      ...prev,
-      [itemId]: {
-        ...(prev[itemId] || {}),
-        [imgIndex]: !prev[itemId]?.[imgIndex] || false,
-      },
-    }));
-  };
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
-    afterChange: (index: number) => setActiveSlide(index),
-  };
 
   const filteredData = allYachts
     .filter(yachts =>
