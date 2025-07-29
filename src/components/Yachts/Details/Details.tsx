@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { MdEdit, MdKeyboardArrowLeft } from "react-icons/md";
 import { useSelector } from "react-redux";
 import type { RootState } from '@/lib/Store/store';
@@ -23,7 +24,6 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
 
     const router = useRouter();
     const { yachts, loading } = useSelector((state: RootState) => state.yachts);
-
 
     const GeneralInfoData = [
         {
@@ -53,7 +53,7 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
     ];
 
     return (
-        <div className="mt-3">
+        <div className="">
             {loading ? (
                 <div className="flex items-center justify-center lg:h-[calc(100vh-265px)]">
                     <div className="w-10 h-10 border-3 border-t-transparent border-[#2185D0] rounded-full animate-spin" />

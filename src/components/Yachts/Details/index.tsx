@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Yachts from "./Details";
+import Yacht from "./DetailsOne"
 import YachtsUpdate from "./Update";
 import BreadCrum from "./BreadCrum";
 
@@ -13,7 +14,7 @@ const YachtsDetail: React.FC<VendorsProps> = ({ id }) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
     const [showGeneralInfo, setShowGeneralInfo] = useState(false);
-    
+
 
     useEffect(() => {
         if (activeIndex === 0) {
@@ -23,15 +24,25 @@ const YachtsDetail: React.FC<VendorsProps> = ({ id }) => {
 
 
     return (
-        <div className={`${(activeIndex === 0 && showGeneralInfo === true) ? '' : 'h-[calc(100vh-112px)]'}`}>
+        <div className={`${(activeIndex === 0 && showGeneralInfo === true) ? '' : ''}`}>
             <BreadCrum id={id} />
-            <div className={`bg-white shadow-xs rounded-2xl px-4 py-4 overflow-hidden h-fit mt-4`}>
-                {activeIndex === 0 && (
-                    showGeneralInfo ?
-                        <YachtsUpdate goToPrevTab={() => setShowGeneralInfo(false)} id={id} />
-                        :
-                        <Yachts goToNextTab={() => setShowGeneralInfo(true)} />
-                )}
+            <div className={`${showGeneralInfo === false ? "flex flex-col lg:flex-row gap-2" : ""} mt-4`}>
+                <div className={`${showGeneralInfo === false ? "w-full lg:w-[70%] xl:w-[75%]" : ""} bg-white shadow-xs rounded-2xl px-4 py-4 overflow-hidden h-fit`}>
+                    {activeIndex === 0 && (
+                        showGeneralInfo ?
+                            <YachtsUpdate goToPrevTab={() => setShowGeneralInfo(false)} id={id} />
+                            :
+                            <Yachts goToNextTab={() => setShowGeneralInfo(true)} />
+                    )}
+                </div>
+                <div className={`${showGeneralInfo === false ? "w-full lg:w-[30%] xl:w-[26%]" : ""}`}>
+                    {activeIndex === 0 && (
+                        showGeneralInfo ?
+                            null
+                            :
+                            <Yacht />
+                    )}
+                </div>
             </div>
         </div>
     )
