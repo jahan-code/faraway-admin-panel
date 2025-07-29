@@ -690,7 +690,7 @@ const AddNewYachts: React.FC = () => {
           );
         })}
         <div className="mt-6 flex items-center justify-between">
-          <button onClick={() => router.push("/yachts")} className="rounded-full px-[16px] py-[7px] border border-[#666666] text-[#222222] flex items-center gap-1 justify-center cursor-pointer font-medium">
+          <button type="button" onClick={() => router.push("/yachts")} className="rounded-full px-[16px] py-[7px] border border-[#666666] text-[#222222] flex items-center gap-1 justify-center cursor-pointer font-medium">
             <MdKeyboardArrowLeft />
             Back
           </button>
