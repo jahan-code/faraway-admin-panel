@@ -318,6 +318,7 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                                         formik.values[field.label as keyof typeof formik.values] ??
                                         "";
                                     const isDropdown = field.type === "dropdown";
+                                    const isNumber = ["Length", "Cabins", "Bathrooms", "Passenger Day Trip", "Passenger Overnight", "Guests", "Day Trip Price", "Overnight Price", "Daytrip Price (Euro)", "Built", "Cruising Speed", "Length Overall", "Fuel Capacity", "Water Capacity"].includes(field.label);
                                     const isPrimaryUpload = field.label === "Primary Image";
                                     const isFileUpload = field.label === "Gallery Images";
                                     const isCheckbox = field.type === "checkbox";
@@ -606,6 +607,38 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                                                                 )}
                                                         </div>
                                                     </div>
+                                                    {fieldError && (
+                                                        <p className="text-[#DB2828] text-sm mt-1">
+                                                            {typeof formik.errors[fieldName] === "string" &&
+                                                                formik.errors[fieldName]}
+                                                        </p>
+                                                    )}
+                                                </>
+                                            ) : isNumber ? (
+                                                <>
+                                                    <input
+                                                        type="number"
+                                                        name={fieldName}
+                                                        placeholder={field.placeholder}
+                                                        value={
+                                                            typeof formik.values[fieldName] === "string" || typeof formik.values[fieldName] === "number"
+                                                                ? formik.values[fieldName]
+                                                                : ""
+                                                        }
+                                                        onChange={(e) => {
+                                                            formik.handleChange(e);
+                                                            formik.setFieldTouched(fieldName, true, false);
+                                                        }}
+                                                        onBlur={formik.handleBlur}
+                                                        className={`placeholder:text-[#999999] outline-none text-[#222222] w-full bg-[#F0F2F4] rounded-lg px-3 py-2  ${fieldError ? "border border-[#DB2828]" : ""
+                                                            }`}
+                                                        onWheel={e => e.currentTarget.blur()}
+                                                        onKeyDown={e => {
+                                                            if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                                                                e.preventDefault();
+                                                            }
+                                                        }}
+                                                    />
                                                     {fieldError && (
                                                         <p className="text-[#DB2828] text-sm mt-1">
                                                             {typeof formik.errors[fieldName] === "string" &&

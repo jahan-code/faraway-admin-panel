@@ -543,7 +543,6 @@ const AddNewYachts: React.FC = () => {
                             type="number"
                             name={fieldName}
                             placeholder={field.placeholder}
-                            // value={formik.values[fieldName] as string}
                             value={
                               typeof formik.values[fieldName] === "string" || typeof formik.values[fieldName] === "number"
                                 ? formik.values[fieldName]
