@@ -395,7 +395,7 @@ const AddNewYachts: React.FC = () => {
                                 name="Primary Image"
                                 accept="image/*"
                                 onChange={handleImageChange}
-                                className="cursor-pointer"
+                                className="cursor-pointer w-full"
                               />
                             ) : (
                               <>
