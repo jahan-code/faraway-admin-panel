@@ -83,8 +83,8 @@ export const NewYachtsData: NewYachtsFormSection[] = [
       { label: "Day Trip Price", placeholder: "e.g,. 30,000 DTP" },
       { label: "Overnight Price", placeholder: "e.g,. 30,000 OP" },
       { label: "Daytrip Price (Euro)", placeholder: "e.g,. 800 EUR" },
-      { label: "Daytrip Price (THB)", placeholder: "e.g,. 800 THB" },
-      { label: "Daytrip Price (USD)", placeholder: "e.g,. 800 USD" },
+      // { label: "Daytrip Price (THB)", placeholder: "e.g,. 800 THB" },
+      // { label: "Daytrip Price (USD)", placeholder: "e.g,. 800 USD" },
       { label: "Primary Image", placeholder: "" },
       {
         label: "Video Link",
@@ -147,36 +147,36 @@ export const RichTextEditorSections = [
   },
 ];
 
-export const YachtsData: NewYachtsFormSection[] = [
-  {
-    section: "",
-    fields: [
-      {
-        label: "Video Link",
-        placeholder: "e.g,. http://www.youtube.com",
-      },
-      // {
-      //   label: "Video Link 2",
-      //   placeholder: "e.g,. http://www.youtube.com",
-      // },
-      // {
-      //   label: "Video Link 3",
-      //   placeholder: "e.g,. http://www.youtube.com",
-      // },
-      { label: "Badge", placeholder: "" },
-    ],
-  },
-  {
-    section: "Yacht Specifications",
-    fields: [
-      { label: "Design", placeholder: "" },
-      { label: "Built", placeholder: "" },
-      { label: "Cruising Speed", placeholder: "" },
-      { label: "Length Overall", placeholder: "" },
-      { label: "Fuel Capacity", placeholder: "" },
-      { label: "Water Capacity", placeholder: "" },
-      { label: "Code", placeholder: "" },
-      { label: "Type", placeholder: "select type", type: "dropdown",  options: ["crewed", "bareboat"]},
-    ],
-  },
-];
+// export const YachtsData: NewYachtsFormSection[] = [
+//   {
+//     section: "",
+//     fields: [
+//       {
+//         label: "Video Link",
+//         placeholder: "e.g,. http://www.youtube.com",
+//       },
+//       {
+//         label: "Video Link 2",
+//         placeholder: "e.g,. http://www.youtube.com",
+//       },
+//       {
+//         label: "Video Link 3",
+//         placeholder: "e.g,. http://www.youtube.com",
+//       },
+//       { label: "Badge", placeholder: "" },
+//     ],
+//   },
+//   {
+//     section: "Yacht Specifications",
+//     fields: [
+//       { label: "Design", placeholder: "" },
+//       { label: "Built", placeholder: "" },
+//       { label: "Cruising Speed", placeholder: "" },
+//       { label: "Length Overall", placeholder: "" },
+//       { label: "Fuel Capacity", placeholder: "" },
+//       { label: "Water Capacity", placeholder: "" },
+//       { label: "Code", placeholder: "" },
+//       { label: "Type", placeholder: "select type", type: "dropdown",  options: ["crewed", "bareboat"]},
+//     ],
+//   },
+// ];
