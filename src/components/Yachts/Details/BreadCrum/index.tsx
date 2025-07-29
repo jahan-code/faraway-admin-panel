@@ -5,11 +5,8 @@ import { useSelector } from "react-redux";
 import type { RootState } from '@/lib/Store/store';
 import { FaSailboat } from "react-icons/fa6";
 
-interface InventoryDetailProps {
-    id: string | number;
-}
 
-const BreadCrum: React.FC<InventoryDetailProps> = ({ id }) => {
+const BreadCrum: React.FC = () => {
 
     const router = useRouter();
     const { yachts } = useSelector((state: RootState) => state.yachts);

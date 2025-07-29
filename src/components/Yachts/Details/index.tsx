@@ -39,9 +39,9 @@ const YachtsDetail: React.FC<VendorsProps> = ({ id }) => {
                 </div>
             ) : (
                 <>
-                    <BreadCrum id={id} />
+                    <BreadCrum />
                     <div className={`${showGeneralInfo === false ? "flex flex-col lg:flex-row gap-2" : ""} mt-4`}>
-                        <div className={`${showGeneralInfo === false ? "w-full lg:w-[70%] xl:w-[75%]" : ""} bg-white shadow-xs rounded-2xl px-4 py-4 overflow-hidden h-fit`}>
+                        <div className={`${showGeneralInfo === false ? "w-full lg:w-[70%] xl:w-[75%]" : ""} bg-white shadow-xs rounded-2xl px-5 py-5 overflow-hidden h-fit`}>
                             {activeIndex === 0 && (
                                 showGeneralInfo ?
                                     <YachtsUpdate goToPrevTab={() => setShowGeneralInfo(false)} id={id} />

@@ -50,7 +50,6 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
                 { label: "Fuel Capacity", optional: "(Optional)", data: yachts?.fuelCapacity || "N/A" },
                 { label: "Water Capacity", optional: "(Optional)", data: yachts?.waterCapacity || "N/A" },
                 { label: "Code", optional: "(Optional)", data: yachts?.code || "N/A" },
-                { label: "Video Link", data: yachts?.videoLink || "N/A" },
             ],
             iconone: MdKeyboardArrowLeft,
             btn: "Back",
