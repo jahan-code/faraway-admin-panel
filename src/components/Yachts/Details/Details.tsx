@@ -22,7 +22,7 @@ function formatDateToDDMMYY(dateString?: string) {
 const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
 
     const router = useRouter();
-    const { yachts, loading } = useSelector((state: RootState) => state.yachts);
+    const { yachts } = useSelector((state: RootState) => state.yachts);
 
     const GeneralInfoData = [
         {
@@ -43,7 +43,7 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
                 { label: "Overnight Price", data: yachts?.overnightPrice || "N/A" },
                 { label: "Day Trip Price Euro", data: `${yachts?.daytripPriceEuro}€` || "N/A" },
                 { label: "Badge", optional: "(Optional)", data: yachts?.badge || "N/A" },
-                { label: "Built", optional: "(Optional)", data: yachts?.built || "N/A" },
+                { label: "Built", optional: "(Optional)", data: formatDateToDDMMYY(yachts?.built || "N/A") },
                 { label: "Design", optional: "(Optional)", data: yachts?.design || "N/A" },
                 { label: "Cruising Speed", optional: "(Optional)", data: yachts?.cruisingSpeed || "N/A" },
                 { label: "Length Overall", optional: "(Optional)", data: yachts?.lengthOverall || "N/A" },

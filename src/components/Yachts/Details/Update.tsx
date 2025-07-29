@@ -33,8 +33,6 @@ interface ImageItem {
 }
 
 type RichTextFieldKey =
-    // | "Price"
-    // | "Trip Details"
     | "Day Charter"
     | "Overnight Charter"
     | "About this Boat"
@@ -143,20 +141,14 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
             "Day Trip Price": yachts?.dayTripPrice || "",
             "Overnight Price": yachts?.overnightPrice || "",
             "Daytrip Price (Euro)": yachts?.daytripPriceEuro || "",
-            // "Daytrip Price (THB)": yachts?.daytripPriceTHB || "",
-            // "Daytrip Price (USD)": yachts?.daytripPriceUSD || "",
             "Primary Image": yachts?.primaryImage || "",
             "Gallery Images": convertExistingImages(yachts?.galleryImages),
-            // Price: yachts?.price || "",
-            // "Trip Details": yachts?.tripDetailsEditor || "",
             "Day Charter": yachts?.dayCharter || "",
             "Overnight Charter": yachts?.overnightCharter || "",
             "About this Boat": yachts?.aboutThisBoat || "",
             Specifications: yachts?.specifications || "",
             "Boat Layout": yachts?.boatLayout,
             "Video Link": yachts?.videoLink || "",
-            // "Video Link 2": yachts?.videoLink2 || "",
-            // "Video Link 3": yachts?.videoLink3 || "",
             Badge: yachts?.badge || "",
             Design: yachts?.design || "",
             Built: yachts?.built || "",
@@ -188,20 +180,14 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                         "Day Trip Price": true,
                         "Overnight Price": true,
                         "Daytrip Price (Euro)": true,
-                        // "Daytrip Price (THB)": true,
-                        // "Daytrip Price (USD)": true,
                         "Primary Image": true,
                         "Gallery Images": true,
-                        // Price: true,
-                        // "Trip Details": true,
                         "Day Charter": true,
                         "Overnight Charter": true,
                         "About this Boat": true,
                         Specifications: true,
                         "Boat Layout": true,
                         "Video Link": true,
-                        // "Video Link 2": true,
-                        // "Video Link 3": true,
                         Badge: true,
                         Design: true,
                         Built: true,
@@ -215,15 +201,7 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                     setSubmitting(false);
                     return;
                 }
-                const galleryImages = Array.isArray(values["Gallery Images"])
-                    ? values["Gallery Images"].map((item: ImageItem) => {
-                        if (item.type === 'file') {
-                            return item.value as File;
-                        } else {
-                            return item.value as string;
-                        }
-                    })
-                    : [];
+                const galleryImages = Array.isArray(values["Gallery Images"]) ? values["Gallery Images"].map((item: ImageItem) => item.value) : [];
                 const resultAction = await dispatch(
                     updateYachts({
                         payload: {
@@ -242,20 +220,14 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                             dayTripPrice: values["Day Trip Price"],
                             overnightPrice: values["Overnight Price"],
                             daytripPriceEuro: values["Daytrip Price (Euro)"],
-                            // daytripPriceTHB: values["Daytrip Price (THB)"] ?? "",
-                            // daytripPriceUSD: values["Daytrip Price (USD)"] ?? "",
                             primaryImage: values["Primary Image"] as File,
-                            galleryImages: galleryImages.filter((img): img is File => typeof img !== "string"),
-                            // priceEditor: values["Price"] ?? "",
-                            // tripDetailsEditor: values["Trip Details"] ?? "",
+                            galleryImages: galleryImages,
                             dayCharter: values["Day Charter"] ?? "",
                             overnightCharter: values["Overnight Charter"] ?? "",
                             aboutThisBoat: values["About this Boat"] ?? "",
                             specifications: values["Specifications"] ?? "",
                             boatLayout: values["Boat Layout"] ?? "",
                             videoLink: values["Video Link"] ?? "",
-                            // videoLink2: values["Video Link 2"] ?? "",
-                            // videoLink3: values["Video Link 3"] ?? "",
                             badge: values["Badge"] ?? "",
                             design: values["Design"] ?? "",
                             built: values["Built"] ?? "",
@@ -463,7 +435,15 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                                                                                     .slice(0, 5);
                                                                                 return `${firstWord}${ext}`;
                                                                             } else if (typeof primaryImage === 'string') {
-                                                                                return "Current Image";
+                                                                                const parts = primaryImage.split('/');
+                                                                                const filename = parts[parts.length - 1];
+                                                                                const extMatch = filename.match(/\.[^/.]+$/);
+                                                                                const ext = extMatch ? extMatch[0] : "";
+                                                                                const nameWithoutExt = filename.replace(/\.[^/.]+$/, "");
+                                                                                if (nameWithoutExt.length > 5) {
+                                                                                    return `${nameWithoutExt.slice(0, 5)}${ext}`;
+                                                                                }
+                                                                                return filename;
                                                                             }
                                                                             return "No file selected";
                                                                         })()}

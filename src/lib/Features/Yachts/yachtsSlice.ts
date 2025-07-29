@@ -39,7 +39,7 @@ export interface AddYachtsPayload {
   title: string;
   type: string;
   primaryImage: File;
-  galleryImages: File[];
+  galleryImages: (File | string)[];
 }
 
 export interface YachtsApiResponse {

@@ -40,20 +40,22 @@ const Yachts: React.FC = () => {
                     Gallery Images
                 </p>
                 <div className="border border-[#CCCCCC] p-1.5 rounded-lg flex justify-center">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                        {yachts?.galleryImages.map((url: string, index: number) => (
-                            <div key={index} className="w-full h-auto">
-                                <Image
-                                    key={index}
-                                    src={url}
-                                    alt={`Vehicle Image ${index + 1}`}
-                                    width={400}
-                                    height={250}
-                                    className="rounded-lg w-full h-[70px] 2xl:h-[90px] object-cover"
-                                />
-                            </div>
-                        ))}
-                    </div>
+                    {Array.isArray(yachts?.galleryImages) && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                            {yachts?.galleryImages.map((url: string, index: number) => (
+                                <div key={index} className="w-full h-auto">
+                                    <Image
+                                        key={index}
+                                        src={url}
+                                        alt={`Vehicle Image ${index + 1}`}
+                                        width={400}
+                                        height={250}
+                                        className="rounded-lg w-full h-[70px] 2xl:h-[90px] object-cover"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
                 <div className="flex justify-end mt-4">
                     <button
@@ -102,26 +104,28 @@ const Yachts: React.FC = () => {
                     </button>
                 </div>
             </div>
-            <div className="bg-white shadow-xs rounded-lg px-2 py-2 w-full">
-                <p className="text-[#001B48] font-bold text-[18px] mb-2 pb-2 border-b border-[#CCCCCC]">
-                    Video URL
-                </p>
-                <div className="border border-[#CCCCCC] p-1.5 rounded-lg flex justify-center">
-                    {yachts?.videoLink ? (
-                        <iframe
-                            src={getEmbedUrl(yachts.videoLink)}
-                            width="296"
-                            height="158"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                            allowFullScreen
-                            className="rounded-lg w-full"
-                            title="Yacht Video"
-                        />
-                    ) : (
-                        <p className="text-gray-500 p-4">No featured video</p>
-                    )}
+            {yachts?.videoLink && yachts.videoLink.length > 0 && (
+                <div className="bg-white shadow-xs rounded-lg px-2 py-2 w-full">
+                    <p className="text-[#001B48] font-bold text-[18px] mb-2 pb-2 border-b border-[#CCCCCC]">
+                        Video URL
+                    </p>
+                    <div className="border border-[#CCCCCC] p-1.5 rounded-lg flex justify-center">
+                        {yachts?.videoLink ? (
+                            <iframe
+                                src={getEmbedUrl(yachts.videoLink)}
+                                width="296"
+                                height="158"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                                allowFullScreen
+                                className="rounded-lg w-full"
+                                title="Yacht Video"
+                            />
+                        ) : (
+                            <p className="text-gray-500 p-4">No featured video</p>
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     )
 }
