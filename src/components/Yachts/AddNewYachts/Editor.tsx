@@ -47,16 +47,13 @@ export default function FroalaEditorComponent({ value, onChange }: FroalaEditorP
     setIsMounted(true)
   }, [])
 
-  // Froala Editor configuration with extensive features
+
   const config = {
     placeholderText: "Start typing your content here...",
-    charCounterCount: false, // Set to false to remove the character counter in the footer
-    heightMin: 400, // Increased minimum height
-    // IMPORTANT: Replace 'YOUR_FROALA_LICENSE_KEY' with your actual license key
-    // A valid license key is required to remove the "Powered by Froala" branding.
+    charCounterCount: false,
+    heightMin: 400,
     licenseKey: "YOUR_FROALA_LICENSE_KEY",
     toolbarButtons: [
-      // Flattened all buttons into a single array for direct visibility
       "bold",
       "italic",
       "underline",
@@ -70,6 +67,10 @@ export default function FroalaEditorComponent({ value, onChange }: FroalaEditorP
       "clearFormatting",
       "alignLeft",
       "alignCenter",
+      "insertLink",
+      "insertImage",
+      "insertVideo",
+      "insertTable",
       "alignRight",
       "alignJustify",
       "formatOL",
@@ -79,11 +80,6 @@ export default function FroalaEditorComponent({ value, onChange }: FroalaEditorP
       "lineHeight",
       "outdent",
       "indent",
-      "quote",
-      "insertLink",
-      "insertImage",
-      "insertVideo",
-      "insertTable",
       "emoticons",
       "specialCharacters",
       "insertHR",
@@ -92,9 +88,9 @@ export default function FroalaEditorComponent({ value, onChange }: FroalaEditorP
       "undo",
       "redo",
       "codeView",
-      "fullscreen", // Added fullscreen button
-      "save", // Added save button
-      "file", // Added file button
+      "fullscreen",
+      "save",
+      "file",
     ],
     pluginsEnabled: [
       "align",
@@ -106,7 +102,7 @@ export default function FroalaEditorComponent({ value, onChange }: FroalaEditorP
       "file",
       "fontFamily",
       "fontSize",
-      "fullscreen", // Ensure fullscreen plugin is enabled
+      "fullscreen",
       "help",
       "image",
       "imageManager",
@@ -118,7 +114,7 @@ export default function FroalaEditorComponent({ value, onChange }: FroalaEditorP
       "print",
       "quickInsert",
       "quote",
-      "save", // Ensure save plugin is enabled
+      "save",
       "table",
       "url",
       "video",
@@ -127,7 +123,7 @@ export default function FroalaEditorComponent({ value, onChange }: FroalaEditorP
   }
 
   if (!isMounted) {
-    return null // Render nothing on the server
+    return null
   }
 
   return (

@@ -14,10 +14,10 @@ export interface AddYachtsPayload {
   guests: string;
   guestsRange: string;
   dayTripPrice: string;
-  daytripPriceUSD: string;
+  // daytripPriceUSD: string;
   overnightPrice: string;
   daytripPriceEuro: string;
-  daytripPriceTHB: string;
+  // daytripPriceTHB: string;
   priceEditor?: string;
   tripDetailsEditor?: string;
   dayCharter?: string;
@@ -57,10 +57,10 @@ export interface YachtsApiResponse {
   guests: string;
   guestsRange: string;
   dayTripPrice: string;
-  daytripPriceUSD: string;
+  // daytripPriceUSD: string;
   overnightPrice: string;
   daytripPriceEuro: string;
-  daytripPriceTHB: string;
+  // daytripPriceTHB: string;
   primaryImage: string;
   galleryImages: string[];
   priceEditor?: string;

@@ -86,22 +86,40 @@ export const NewYachtsData: NewYachtsFormSection[] = [
       { label: "Daytrip Price (THB)", placeholder: "e.g,. 800 THB" },
       { label: "Daytrip Price (USD)", placeholder: "e.g,. 800 USD" },
       { label: "Primary Image", placeholder: "" },
+      {
+        label: "Video Link",
+        placeholder: "e.g,. http://www.youtube.com",
+      },
+      { label: "Badge", placeholder: "" },
+    ],
+  },
+  {
+    section: "Yacht Specifications",
+    fields: [
+      { label: "Design", placeholder: "" },
+      { label: "Built", placeholder: "" },
+      { label: "Cruising Speed", placeholder: "" },
+      { label: "Length Overall", placeholder: "" },
+      { label: "Fuel Capacity", placeholder: "" },
+      { label: "Water Capacity", placeholder: "" },
+      { label: "Code", placeholder: "" },
+      { label: "Type", placeholder: "select type", type: "dropdown",  options: ["crewed", "bareboat"]},
       { label: "Gallery Images", placeholder: "" },
     ],
   },
 ];
 
 export const RichTextEditorSections = [
-  {
-    id: "price",
-    label: "Price",
-    content: "",
-  },
-  {
-    id: "tripDetails",
-    label: "Trip Details",
-    content: "",
-  },
+  // {
+  //   id: "price",
+  //   label: "Price",
+  //   content: "",
+  // },
+  // {
+  //   id: "tripDetails",
+  //   label: "Trip Details",
+  //   content: "",
+  // },
   {
     id: "dayCharter",
     label: "Day Charter",
@@ -137,14 +155,14 @@ export const YachtsData: NewYachtsFormSection[] = [
         label: "Video Link",
         placeholder: "e.g,. http://www.youtube.com",
       },
-      {
-        label: "Video Link 2",
-        placeholder: "e.g,. http://www.youtube.com",
-      },
-      {
-        label: "Video Link 3",
-        placeholder: "e.g,. http://www.youtube.com",
-      },
+      // {
+      //   label: "Video Link 2",
+      //   placeholder: "e.g,. http://www.youtube.com",
+      // },
+      // {
+      //   label: "Video Link 3",
+      //   placeholder: "e.g,. http://www.youtube.com",
+      // },
       { label: "Badge", placeholder: "" },
     ],
   },

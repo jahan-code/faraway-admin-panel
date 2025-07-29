@@ -168,7 +168,14 @@ const YachtsDetail = () => {
               return (
                 <div key={yachtIndex} className="bg-white cursor-pointer border border-[#CECECE] rounded-lg shadow-md px-[8px] py-[8px] flex gap-4 items-center overflow-hidden" onClick={() => router.push(`/yachts/${yachtItem._id}`)}>
                   <div className="hidden md:block relative w-[37%] overflow-hidden">
-                    {yachtItem.galleryImages?.length > 1 ? (
+                    <Image
+                      src={yachtItem?.primaryImage}
+                      alt="Yacht image"
+                      width={300}
+                      height={258}
+                      className="w-full h-[260px] object-cover rounded-lg"
+                    />
+                    {/* {yachtItem.galleryImages?.length > 1 ? (
                       <div className="relative">
                         <Slider ref={sliderRef} {...settings}>
                           {yachtItem.galleryImages.map((imgSrc, index) => (
@@ -215,7 +222,7 @@ const YachtsDetail = () => {
                       ) : (
                         <FaRegHeart />
                       )}
-                    </div>
+                    </div> */}
                   </div>
                   <div className="pt-[4px] border-r border-[#D1D1D1] pr-5 w-[70%]">
                     <h3 className="font-plusjakarta font-extrabold text-[19px] text-[#0061B1]">{yachtItem.title}</h3>
