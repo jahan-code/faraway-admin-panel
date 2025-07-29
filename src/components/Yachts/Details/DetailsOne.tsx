@@ -3,12 +3,12 @@
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import type { RootState } from '@/lib/Store/store';
-import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { IoEyeOutline } from "react-icons/io5";
 
 
 const Yachts: React.FC = () => {
 
-    const { yachts, loading } = useSelector((state: RootState) => state.yachts);
+    const { yachts } = useSelector((state: RootState) => state.yachts);
 
     return (
         <div className="flex flex-col gap-3">

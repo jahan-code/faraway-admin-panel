@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { MdEdit, MdKeyboardArrowLeft } from "react-icons/md";
 import { useSelector } from "react-redux";
 import type { RootState } from '@/lib/Store/store';
