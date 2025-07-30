@@ -12,7 +12,8 @@ import { MdOutlineBathroom, MdClose } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { FaSailboat } from "react-icons/fa6";
+import { IoPersonSharp } from "react-icons/io5";
+
 
 const YachtsDetail = () => {
 
@@ -115,12 +116,12 @@ const YachtsDetail = () => {
                 },
                 {
                   id: 2,
-                  img: "/images/Home/featured-guest.svg",
+                  icon: IoPersonSharp,
                   label: yachtItem?.passengerDayTrip ? `${yachtItem.passengerDayTrip}` : null,
                 },
                 {
                   id: 3,
-                  icon: FaSailboat,
+                  icon: IoPersonSharp,
                   label: yachtItem?.passengerOvernight ? `${yachtItem.passengerOvernight}` : null,
                 },
               ];
@@ -207,7 +208,7 @@ const YachtsDetail = () => {
                   </div>
                   <div className="pt-[1px] flex flex-col justify-between h-[16rem] w-[20%]">
                     <div className="flex justify-end">
-                      <p className="gradient-text font-extrabold text-[13px] font-plusjakarta">Luxury on the Waves!</p>
+                      <p className="gradient-text font-extrabold font-plusjakarta">{yachtItem?.capacity}</p>
                     </div>
                     <div className="flex flex-col items-end">
                       <p className="text-[#3D3D3D] font-normal text-[13px] font-plusjakarta">

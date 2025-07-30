@@ -16,7 +16,6 @@ import {
     yachtsUpdateValidationSchema,
     FormYachtsUpdateValues,
 } from "@/lib/Validation/addyachtsValidationSchema";
-import Editor from "../AddNewYachts/Editor";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import RichTextEditor from "../AddNewYachts/RichTextEditor";
