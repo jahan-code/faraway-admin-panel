@@ -116,12 +116,12 @@ const YachtsDetail = () => {
                 {
                   id: 2,
                   img: "/images/Home/featured-guest.svg",
-                  label: yachtItem?.guests ? `${yachtItem.guests} guests` : null,
+                  label: yachtItem?.passengerDayTrip ? `${yachtItem.passengerDayTrip}` : null,
                 },
                 {
                   id: 3,
                   icon: FaSailboat,
-                  label: yachtItem?.boatType ?? null,
+                  label: yachtItem?.passengerOvernight ? `${yachtItem.passengerOvernight}` : null,
                 },
               ];
               const Cabins = [

@@ -109,7 +109,8 @@ const ImageResizeHandles: React.FC<ImageResizeHandlesProps> = ({
   )
 
   const handleImageMouseDown = useCallback(
-    (e: React.MouseEvent) => {
+    (e: MouseEvent) => {
+      // Changed from React.MouseEvent to MouseEvent
       e.stopPropagation() // Prevent editor click from deselecting
       e.preventDefault() // Prevent default drag behavior
 
@@ -241,9 +242,9 @@ const ImageResizeHandles: React.FC<ImageResizeHandlesProps> = ({
 
   // Set up mouse down listener on the image itself for dragging
   useEffect(() => {
-    imgElement.addEventListener("mousedown", handleImageMouseDown as any) // Cast to any to satisfy type checking for MouseEvent
+    imgElement.addEventListener("mousedown", handleImageMouseDown) // Removed 'as any'
     return () => {
-      imgElement.removeEventListener("mousedown", handleImageMouseDown as any)
+      imgElement.removeEventListener("mousedown", handleImageMouseDown) // Removed 'as any'
     }
   }, [imgElement, handleImageMouseDown])
 

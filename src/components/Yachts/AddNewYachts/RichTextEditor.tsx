@@ -1435,7 +1435,7 @@ const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange
         <div
           ref={editorRef}
           contentEditable
-          className="max-h-[400px] overflow-y-auto p-6 focus:outline-none"
+          className="h-[300px] overflow-y-auto p-6 focus:outline-none"
           style={{
             lineHeight: "1.6",
             fontSize: "14px",
