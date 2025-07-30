@@ -42,6 +42,7 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
                 { label: "Day Trip Price", data: yachts?.dayTripPrice || "N/A" },
                 { label: "Overnight Price", data: yachts?.overnightPrice || "N/A" },
                 { label: "Day Trip Price Euro", data: `${yachts?.daytripPriceEuro}€` || "N/A" },
+                { label: "Length Range", optional: "(Optional)", data: yachts?.lengthRange || "N/A" },
                 { label: "Badge", optional: "(Optional)", data: yachts?.badge || "N/A" },
                 { label: "Built", optional: "(Optional)", data: formatDateToDDMMYY(yachts?.built || "N/A") },
                 { label: "Design", optional: "(Optional)", data: yachts?.design || "N/A" },
@@ -63,7 +64,7 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
             {GeneralInfoData.map((section, Idx) => (
                 <div key={Idx}>
                     {section.array && (
-                        <div className="grid md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                        <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
                             {section.array.map((item, idx) => (
                                 <div key={idx} className="flex">
                                     <div className="flex items-center gap-1 w-1/2">
@@ -73,6 +74,51 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
                                     <span className="font-inter font-medium text-[#222222] w-1/2 break-words">{item.data}</span>
                                 </div>
                             ))}
+                        </div>
+                    )}
+                    {yachts?.dayCharter?.trim() && (
+                        <div className="mt-4">
+                            <h2 className="font-bold text-[#222222] mb-4">Day Charter</h2>
+                            <div
+                                className="prose max-w-full"
+                                dangerouslySetInnerHTML={{ __html: yachts.dayCharter }}
+                            />
+                        </div>
+                    )}
+                    {yachts?.overnightCharter?.trim() && (
+                        <div className="mt-4">
+                            <h2 className="font-bold text-[#222222] mb-4">Overnight Charter</h2>
+                            <div
+                                className="prose max-w-full"
+                                dangerouslySetInnerHTML={{ __html: yachts.overnightCharter }}
+                            />
+                        </div>
+                    )}
+                    {yachts?.aboutThisBoat?.trim() && (
+                        <div className="mt-4">
+                            <h2 className="font-bold text-[#222222] mb-4">About this Boat</h2>
+                            <div
+                                className="prose max-w-full"
+                                dangerouslySetInnerHTML={{ __html: yachts.aboutThisBoat }}
+                            />
+                        </div>
+                    )}
+                    {yachts?.specifications?.trim() && (
+                        <div className="mt-4">
+                            <h2 className="font-bold text-[#222222] mb-4">Specifications</h2>
+                            <div
+                                className="prose max-w-full"
+                                dangerouslySetInnerHTML={{ __html: yachts.specifications }}
+                            />
+                        </div>
+                    )}
+                    {yachts?.boatLayout?.trim() && (
+                        <div className="mt-4">
+                            <h2 className="font-bold text-[#222222] mb-4">Boat Layout</h2>
+                            <div
+                                className="prose max-w-full"
+                                dangerouslySetInnerHTML={{ __html: yachts.boatLayout }}
+                            />
                         </div>
                     )}
                     {(section.btn || section.btnone) && (

@@ -17,7 +17,7 @@ import {
   yachtsvalidationSchema,
   FormYachtsValues,
 } from "@/lib/Validation/addyachtsValidationSchema";
-import Editor from "./Editor";
+import RichTextEditor from "./RichTextEditor";
 
 type RichTextFieldKey =
   // | "Price"
@@ -490,7 +490,7 @@ const AddNewYachts: React.FC = () => {
                                     </span>
                                   </p>
                                 </div>
-                                <p>JPEG, PNG, PDF (Max size 10MB)</p>
+                                <p>JPEG, PNG (Max size 10MB)</p>
                               </label>
                               {Array.isArray(formik.values["Gallery Images"]) &&
                                 formik.values["Gallery Images"].length > 0 && (
@@ -604,7 +604,7 @@ const AddNewYachts: React.FC = () => {
             <div key={section.id} className="mt-4 grid lg:grid-cols-2 gap-2">
               <p className="font-bold text-[#222222]">{section.label}</p>
               <div className="w-full">
-                <Editor
+                <RichTextEditor
                   value={formik.values[section.label as RichTextFieldKey] ?? ""}
                   onChange={(html) => formik.setFieldValue(section.label, html)}
                 />

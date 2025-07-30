@@ -19,6 +19,7 @@ import {
 import Editor from "../AddNewYachts/Editor";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import RichTextEditor from "../AddNewYachts/RichTextEditor";
 
 
 interface CustomerProps {
@@ -125,6 +126,7 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
     };
 
     const formik = useFormik<FormYachtsUpdateValues>({
+        enableReinitialize: true,
         initialValues: {
             "Boat Type": yachts?.boatType || "",
             Title: yachts?.title || "",
@@ -222,11 +224,11 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                             daytripPriceEuro: values["Daytrip Price (Euro)"],
                             primaryImage: values["Primary Image"] as File,
                             galleryImages: galleryImages,
-                            dayCharter: values["Day Charter"] ?? "",
-                            overnightCharter: values["Overnight Charter"] ?? "",
-                            aboutThisBoat: values["About this Boat"] ?? "",
-                            specifications: values["Specifications"] ?? "",
-                            boatLayout: values["Boat Layout"] ?? "",
+                            dayCharter: values["Day Charter"] || yachts?.dayCharter || "",
+                            overnightCharter: values["Overnight Charter"] || yachts?.overnightCharter || "",
+                            aboutThisBoat: values["About this Boat"] || yachts?.aboutThisBoat || "",
+                            specifications: values["Specifications"] || yachts?.specifications || "",
+                            boatLayout: values["Boat Layout"] || yachts?.boatLayout || "",
                             videoLink: values["Video Link"] ?? "",
                             badge: values["Badge"] ?? "",
                             design: values["Design"] ?? "",
@@ -522,7 +524,7 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                                                                         </span>
                                                                     </p>
                                                                 </div>
-                                                                <p>JPEG, PNG, PDF (Max size 10MB)</p>
+                                                                <p>JPEG, PNG (Max size 10MB)</p>
                                                             </label>
                                                             {Array.isArray(formik.values["Gallery Images"]) &&
                                                                 formik.values["Gallery Images"].length > 0 && (
@@ -661,7 +663,7 @@ const YachtsUpdate: React.FC<CustomerProps> = ({ goToPrevTab, id }) => {
                         <div key={section.id} className="mt-4 grid lg:grid-cols-2 gap-2">
                             <p className="font-bold text-[#222222]">{section.label}</p>
                             <div className="w-full">
-                                <Editor
+                                <RichTextEditor
                                     value={formik.values[section.label as RichTextFieldKey] ?? ""}
                                     onChange={(html) => formik.setFieldValue(section.label, html)}
                                 />
