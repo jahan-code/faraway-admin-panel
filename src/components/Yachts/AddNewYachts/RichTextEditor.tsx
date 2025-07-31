@@ -18,7 +18,6 @@ import {
   AlignCenter,
   AlignRight,
   Link,
-  Eraser,
   Indent,
   Outdent,
   Minus,
