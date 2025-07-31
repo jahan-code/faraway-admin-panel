@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { MdEdit, MdKeyboardArrowLeft } from "react-icons/md";
 import { useSelector } from "react-redux";
 import type { RootState } from '@/lib/Store/store';
+import DOMPurify from 'dompurify';
 
 interface CustomersProps {
     goToNextTab: () => void;
@@ -65,15 +66,17 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
                 <div key={Idx}>
                     {section.array && (
                         <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
-                            {section.array.map((item, idx) => (
-                                <div key={idx} className="flex">
-                                    <div className="flex items-center gap-1 w-1/2">
-                                        <span className="text-[#222222] font-bold">{item.label}</span>
-                                        <span className="text-[#222222] font-normal text-[14px]">{item.optional}</span>
+                            {section.array
+                                .filter((item) => item.data !== "N/A")
+                                .map((item, idx) => (
+                                    <div key={idx} className="flex">
+                                        <div className="flex items-center gap-1 w-1/2">
+                                            <span className="text-[#222222] font-bold">{item.label}</span>
+                                            <span className="text-[#222222] font-normal text-[14px]">{item.optional}</span>
+                                        </div>
+                                        <span className="font-inter font-medium text-[#222222] w-1/2 break-words">{item.data}</span>
                                     </div>
-                                    <span className="font-inter font-medium text-[#222222] w-1/2 break-words">{item.data}</span>
-                                </div>
-                            ))}
+                                ))}
                         </div>
                     )}
                     {yachts?.dayCharter?.trim() && (
@@ -81,7 +84,7 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
                             <h2 className="font-bold text-[#222222] mb-4">Day Charter</h2>
                             <div
                                 className="prose max-w-full"
-                                dangerouslySetInnerHTML={{ __html: yachts.dayCharter }}
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(yachts.dayCharter || "") }}
                             />
                         </div>
                     )}
@@ -90,7 +93,7 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
                             <h2 className="font-bold text-[#222222] mb-4">Overnight Charter</h2>
                             <div
                                 className="prose max-w-full"
-                                dangerouslySetInnerHTML={{ __html: yachts.overnightCharter }}
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(yachts.overnightCharter || "") }}
                             />
                         </div>
                     )}
@@ -99,7 +102,7 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
                             <h2 className="font-bold text-[#222222] mb-4">About this Boat</h2>
                             <div
                                 className="prose max-w-full"
-                                dangerouslySetInnerHTML={{ __html: yachts.aboutThisBoat }}
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(yachts.aboutThisBoat || "") }}
                             />
                         </div>
                     )}
@@ -108,7 +111,7 @@ const Yachts: React.FC<CustomersProps> = ({ goToNextTab }) => {
                             <h2 className="font-bold text-[#222222] mb-4">Specifications</h2>
                             <div
                                 className="prose max-w-full"
-                                dangerouslySetInnerHTML={{ __html: yachts.specifications }}
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(yachts.specifications || "") }}
                             />
                         </div>
                     )}

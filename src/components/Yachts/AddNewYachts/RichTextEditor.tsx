@@ -54,7 +54,7 @@ const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange
 
   // Initialize editor content from value prop
   useEffect(() => {
-    if (editorRef.current && editorRef.current.innerHTML !== value && !isUpdatingRef.current) {
+     if (editorRef.current && editorRef.current.innerHTML !== value && !isUpdatingRef.current) {
       editorRef.current.innerHTML = value
       setEditorContent(value)
     }
@@ -112,6 +112,138 @@ const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange
     [restoreSelection],
   )
 
+  // Helper function to get all selected table cells
+  const getSelectedTableCells = useCallback(
+    (selection: Selection, editorElement: HTMLDivElement): HTMLTableCellElement[] => {
+      const cells: HTMLTableCellElement[] = []
+      if (!selection || selection.rangeCount === 0) return cells
+
+      const range = selection.getRangeAt(0)
+
+      // Find the actual start and end TD elements
+      let startCell: HTMLTableCellElement | null = null
+      let endCell: HTMLTableCellElement | null = null
+
+      let node: Node | null = range.startContainer
+      while (node && node !== editorElement) {
+        if (node.nodeType === Node.ELEMENT_NODE && (node as HTMLElement).tagName === "TD") {
+          startCell = node as HTMLTableCellElement
+          break
+        }
+        node = node.parentNode
+      }
+
+      node = range.endContainer
+      while (node && node !== editorElement) {
+        if (node.nodeType === Node.ELEMENT_NODE && (node as HTMLElement).tagName === "TD") {
+          endCell = node as HTMLTableCellElement
+          break
+        }
+        node = node.parentNode
+      }
+
+      if (!startCell && !endCell) {
+        return cells // No table cells involved in selection
+      }
+
+      // If only one cell is selected (collapsed or within a single cell)
+      if (startCell && (!endCell || startCell === endCell)) {
+        cells.push(startCell)
+        return cells
+      }
+
+      // If multiple cells are selected
+      if (startCell && endCell && startCell.closest("table") === endCell.closest("table")) {
+        const table = startCell.closest("table")
+        if (!table) return cells
+
+        const rows = Array.from(table.querySelectorAll("tr"))
+        let startRowIndex = -1,
+          startColIndex = -1
+        let endRowIndex = -1,
+          endColIndex = -1
+
+        // Find indices of start and end cells
+        rows.forEach((row, rIdx) => {
+          const rowCells = Array.from(row.querySelectorAll("td"))
+          rowCells.forEach((cell, cIdx) => {
+            if (cell === startCell) {
+              startRowIndex = rIdx
+              startColIndex = cIdx
+            }
+            if (cell === endCell) {
+              endRowIndex = rIdx
+              endColIndex = cIdx
+            }
+          })
+        })
+
+        if (startRowIndex === -1 || endRowIndex === -1) return cells // Should not happen if startCell/endCell are found
+
+        // Determine the bounding box of selected cells
+        const minRow = Math.min(startRowIndex, endRowIndex)
+        const maxRow = Math.max(startRowIndex, endRowIndex)
+        const minCol = Math.min(startColIndex, endColIndex)
+        const maxCol = Math.max(startColIndex, endColIndex)
+
+        // Iterate through all cells in the table and add those within the bounding box
+        rows.forEach((row, rIdx) => {
+          if (rIdx >= minRow && rIdx <= maxRow) {
+            const rowCells = Array.from(row.querySelectorAll("td"))
+            rowCells.forEach((cell, cIdx) => {
+              if (cIdx >= minCol && cIdx <= maxCol) {
+                cells.push(cell)
+              }
+            })
+          }
+        })
+      }
+
+      return Array.from(new Set(cells)) // Ensure uniqueness
+    },
+    [],
+  )
+
+  // Function to apply shading to selected table cells
+  const applyCellShading = useCallback(
+    (color: string) => {
+      restoreSelection()
+      const selection = window.getSelection()
+      if (!selection || selection.rangeCount === 0 || !editorRef.current) return
+
+      const selectedCells = getSelectedTableCells(selection, editorRef.current)
+
+      selectedCells.forEach((cell) => {
+        cell.style.backgroundColor = color
+      })
+
+      editorRef.current.focus()
+      setEditorContent(editorRef.current.innerHTML)
+    },
+    [restoreSelection, getSelectedTableCells],
+  )
+
+  const handleBackColorChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const color = e.target.value
+      restoreSelection() // Always restore selection first
+
+      const selection = window.getSelection()
+      if (selection && selection.rangeCount > 0 && editorRef.current) {
+        const selectedCells = getSelectedTableCells(selection, editorRef.current)
+        if (selectedCells.length > 0) {
+          applyCellShading(color)
+        } else {
+          executeCommand("backColor", color)
+        }
+      } else {
+        // Fallback if no selection (e.g., editor not focused)
+        executeCommand("backColor", color)
+      }
+    },
+    [restoreSelection, getSelectedTableCells, applyCellShading, executeCommand],
+  )
+
   const insertTable = useCallback((dimensions: TableDimensions) => {
     if (!editorRef.current) {
       console.error("Editor ref is null, cannot insert table.")
@@ -128,7 +260,7 @@ const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange
 
     // Create the table HTML
     let tableHTML = `
-    <table style="border-collapse: collapse; width: 100%; margin: 15px 0; border: 2px solid #333;">
+    <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
       <tbody>
   `
     for (let i = 0; i < dimensions.rows; i++) {
@@ -139,7 +271,6 @@ const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange
           border: 1px solid #666; 
           padding: 12px; 
           min-height: 40px;
-          background-color: #f9f9f9;
           vertical-align: top;
         " contenteditable="true">
           <br>
@@ -1361,7 +1492,7 @@ const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange
           <Separator orientation="vertical" className="h-6" />
 
           {/* Clear Formatting */}
-          <Button
+          {/* <Button
             type="button"
             variant="ghost"
             size="sm"
@@ -1370,7 +1501,7 @@ const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange
             title="Clear Formatting"
           >
             <Eraser className="h-4 w-4" />
-          </Button>
+          </Button> */}
           <Separator orientation="vertical" className="h-6" />
 
           {/* Font Size */}
@@ -1399,13 +1530,13 @@ const RichTextEditor: React.FC<RichTextEditorOneProps> = ({ value = "", onChange
           <input
             type="color"
             className="h-8 w-12 border border-gray-300 rounded cursor-pointer"
-            onChange={(e) => executeCommand("backColor", e.target.value)}
+            onChange={handleBackColorChange}
             title="Background Color"
           />
         </div>
 
         {/* Table button on a new line at the end */}
-        <div className="flex flex-wrap items-center gap-2 mt-2">
+        <div className="flex flex-wrap items-center gap-2">
           <div className="relative">
             <Button
               type="button"
