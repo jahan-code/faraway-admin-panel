@@ -11,6 +11,7 @@ export interface AddYachtsPayload {
   bathrooms: string;
   passengerDayTrip: string;
   passengerOvernight: string;
+  // ;;;
   guests: string;
   guestsRange: string;
   dayTripPrice: string;
