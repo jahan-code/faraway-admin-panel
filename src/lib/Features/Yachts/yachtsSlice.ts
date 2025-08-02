@@ -83,6 +83,7 @@ export interface YachtsApiResponse {
   waterCapacity: string;
   type: string;
   code?: string;
+  status: string;
   createdAt: string;
   __v: number;
 }
@@ -114,6 +115,7 @@ interface YachtsState {
   currentPage: number;
   getLoading: boolean;
   deleteLoading: boolean;
+  publishLoading: boolean;
 }
 
 const initialState: YachtsState = {
@@ -127,6 +129,7 @@ const initialState: YachtsState = {
   currentPage: 1,
   getLoading: false,
   deleteLoading: false,
+  publishLoading: false,
 };
 
 // Add Yacht
@@ -137,10 +140,16 @@ export const addYachts = createAsyncThunk<
 >(
   "yachts/addYacht",
   async (credentials, { rejectWithValue }) => {
+    console.log('addYachts async thunk called with credentials:', credentials);
     try {
       const token = localStorage.getItem("token");
+      console.log('Token:', token ? 'Token exists' : 'No token found');
+      
+      const url = "https://faraway.thedevapp.online/yacht/add-yacht";
+      console.log('Making request to:', url);
+      
       const response = await axios.post(
-        "https://faraway.thedevapp.online/yacht/add-yacht",
+        url,
         credentials,
         {
           withCredentials: true,
@@ -150,6 +159,9 @@ export const addYachts = createAsyncThunk<
           },
         }
       );
+      
+      console.log('Response received:', response.data);
+      
       if (response?.data.error) {
         throw new Error(
           response?.data?.error?.message || "Something went wrong"
@@ -157,6 +169,7 @@ export const addYachts = createAsyncThunk<
       }
       return response.data;
     } catch (error: unknown) {
+      console.error('Error in addYachts:', error);
       const axiosError = error as AxiosError<{ message: string }>;
       const message =
         axiosError.response?.data?.message ||
@@ -305,6 +318,59 @@ export const deleteYachts = createAsyncThunk<
   }
 );
 
+// Publish/Unpublish Yacht
+export const publishYacht = createAsyncThunk<
+  Yachts,
+  { yachtId: string; status: string },
+  { rejectValue: { error: { message: string } } }
+>(
+  "yachts/publishYacht",
+  async ({ yachtId, status }, { rejectWithValue }) => {
+    console.log('publishYacht async thunk called with ID:', yachtId, 'status:', status);
+    try {
+      const token = localStorage.getItem("token");
+      console.log('Token:', token ? 'Token exists' : 'No token found');
+      
+      const url = `https://faraway.thedevapp.online/yacht/update-status?id=${yachtId}`;
+      console.log('Making request to:', url);
+      
+      const payload = {
+        status: status
+      };
+      console.log('Sending payload:', payload);
+      
+      const response = await axios.patch(
+        url,
+        payload,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      
+      console.log('Response received:', response.data);
+      
+      if (response?.data.error) {
+        throw new Error(
+          response?.data?.error?.message || "Something went wrong"
+        );
+      }
+      return response.data.data;
+    } catch (error: unknown) {
+      console.error('Error in publishYacht:', error);
+      const axiosError = error as AxiosError<{ message: string }>;
+      const message =
+        axiosError.response?.data?.message ||
+        axiosError.message ||
+        "Something went wrong";
+      return rejectWithValue({ error: { message } });
+    }
+  }
+);
+
 const yachtsSlice = createSlice({
   name: "yachts",
   initialState,
@@ -398,6 +464,25 @@ const yachtsSlice = createSlice({
         state.deleteLoading = false;
         const payload = action.payload as { error: { message: string } };
         state.error = payload?.error?.message || "Failed to delete yacht.";
+      })
+      // Publish Yacht
+      .addCase(publishYacht.pending, (state) => {
+        state.publishLoading = true;
+        state.error = null;
+      })
+      .addCase(publishYacht.fulfilled, (state, action) => {
+        state.publishLoading = false;
+        // Update the yacht in the list with published status
+        const index = state.allYachts.findIndex(yacht => yacht._id === action.payload._id);
+        if (index !== -1) {
+          state.allYachts[index] = action.payload;
+        }
+        state.error = null;
+      })
+      .addCase(publishYacht.rejected, (state, action) => {
+        state.publishLoading = false;
+        const payload = action.payload as { error: { message: string } };
+        state.error = payload?.error?.message || "Failed to publish yacht.";
       });
   },
 });
