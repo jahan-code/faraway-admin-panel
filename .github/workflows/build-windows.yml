@@ -41,8 +41,8 @@ jobs:
           NEXT_DISABLE_SWC_BINARY: "1"
         shell: pwsh
 
-      - name: Build Windows installer (NSIS)
-        run: npx electron-builder --win nsis --publish never
+      - name: Build Windows portable (faster)
+        run: npx electron-builder --win portable --publish never
         shell: pwsh
 
       - name: Show disk space (post-build)
