@@ -11,9 +11,14 @@ jobs:
     env:
       # Avoid native binary locking issues on Windows
       TAILWIND_DISABLE_OXIDE: "1"
+      NEXT_TELEMETRY_DISABLED: "1"
       # Keep CI caches on the runner temp drive
       ELECTRON_CACHE: ${{ runner.temp }}\electron
       ELECTRON_BUILDER_CACHE: ${{ runner.temp }}\electron-builder
+      # Do not attempt code-signing or publishing in CI unless explicitly enabled
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      CSC_FOR_WINDOWS: "false"
+      ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,7 +43,7 @@ jobs:
         shell: pwsh
 
       - name: Build Windows installer (NSIS)
-        run: npx electron-builder --win nsis
+        run: npx electron-builder --win nsis --publish never
         shell: pwsh
 
       - name: Upload dist artifacts
