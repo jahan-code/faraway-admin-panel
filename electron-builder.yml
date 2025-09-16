@@ -16,7 +16,7 @@ asar: true
 asarUnpack:
   - "backend/**/*"
   - "node_modules/**/*.node"
-compression: maximum
+compression: normal
 electronVersion: 38.1.0
 
 # Windows Configuration
@@ -28,7 +28,6 @@ win:
       arch: [x64]
     - target: zip
       arch: [x64]
-  icon: build/icon.ico
   verifyUpdateCodeSignature: false
 
 # NSIS Installer Configuration (Windows)
@@ -36,13 +35,9 @@ nsis:
   oneClick: false
   allowToChangeInstallationDirectory: true
   allowElevation: true
-  installerIcon: build/icon.ico
-  uninstallerIcon: build/icon.ico
-  installerHeaderIcon: build/icon.ico
   createDesktopShortcut: always
   createStartMenuShortcut: true
   shortcutName: Faraway Admin Panel
-  include: build/installer.nsh
 
 # Portable Configuration
 portable:
@@ -55,7 +50,6 @@ mac:
       arch: [x64, arm64]
     - target: zip
       arch: [x64, arm64]
-  icon: build/icon.icns
   category: public.app-category.productivity
   hardenedRuntime: true
   gatekeeperAssess: false
@@ -84,7 +78,6 @@ linux:
       arch: [x64]
     - target: tar.gz
       arch: [x64]
-  icon: build/icon.png
   category: Office
   synopsis: Faraway Admin Panel - Yacht Management System
   description: Professional yacht management and administration panel
