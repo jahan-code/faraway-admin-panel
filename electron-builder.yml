@@ -18,6 +18,8 @@ asarUnpack:
   - "node_modules/**/*.node"
 compression: normal
 electronVersion: 38.1.0
+npmRebuild: false
+nodeGypRebuild: false
 
 # Windows Configuration
 win:
