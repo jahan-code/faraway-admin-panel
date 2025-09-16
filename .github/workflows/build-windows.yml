@@ -12,9 +12,6 @@ jobs:
       # Avoid native binary locking issues on Windows
       TAILWIND_DISABLE_OXIDE: "1"
       NEXT_TELEMETRY_DISABLED: "1"
-      # Keep CI caches on the runner temp drive
-      ELECTRON_CACHE: ${{ runner.temp }}\electron
-      ELECTRON_BUILDER_CACHE: ${{ runner.temp }}\electron-builder
       # Do not attempt code-signing or publishing in CI unless explicitly enabled
       CSC_IDENTITY_AUTO_DISCOVERY: "false"
       CSC_FOR_WINDOWS: "false"
@@ -35,15 +32,22 @@ jobs:
         shell: pwsh
 
       - name: Install dependencies (clean)
-        run: npm ci
+        run: npm ci --no-audit --no-fund
         shell: pwsh
 
       - name: Build Next.js (standalone)
         run: npm run build
+        env:
+          NEXT_DISABLE_SWC_BINARY: "1"
         shell: pwsh
 
       - name: Build Windows installer (NSIS)
         run: npx electron-builder --win nsis --publish never
+        shell: pwsh
+
+      - name: Show disk space (post-build)
+        if: always()
+        run: Get-PSDrive -PSProvider FileSystem
         shell: pwsh
 
       - name: Upload dist artifacts
