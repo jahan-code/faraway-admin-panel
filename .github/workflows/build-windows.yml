@@ -1,0 +1,49 @@
+name: Build Windows Installer
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    env:
+      # Avoid native binary locking issues on Windows
+      TAILWIND_DISABLE_OXIDE: "1"
+      # Keep CI caches on the runner temp drive
+      ELECTRON_CACHE: ${{ runner.temp }}\electron
+      ELECTRON_BUILDER_CACHE: ${{ runner.temp }}\electron-builder
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Use a stable modern Node. Your repo uses TypeScript 5 / Next 15 fine with Node 20+
+          node-version: 20
+          cache: 'npm'
+
+      - name: Show disk space
+        run: Get-PSDrive -PSProvider FileSystem
+        shell: pwsh
+
+      - name: Install dependencies (clean)
+        run: npm ci
+        shell: pwsh
+
+      - name: Build Next.js (standalone)
+        run: npm run build
+        shell: pwsh
+
+      - name: Build Windows installer (NSIS)
+        run: npx electron-builder --win nsis
+        shell: pwsh
+
+      - name: Upload dist artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: faraway-admin-panel-dist
+          path: dist/**
+          if-no-files-found: error

@@ -1,0 +1,1 @@
+{"level":"error","message":"Invalid email or password.","method":"POST","service":"user-service","timestamp":"2025-09-15T14:25:50.775Z","url":"/auth/admin/login"}

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
+import { API_URL } from "../../config/api";
 
 export interface AddYachtsPayload {
   boatType: string;
@@ -145,7 +146,7 @@ export const addYachts = createAsyncThunk<
       const token = localStorage.getItem("token");
       console.log('Token:', token ? 'Token exists' : 'No token found');
       
-      const url = "https://faraway.thedevapp.online/yacht/add-yacht";
+      const url = `${API_URL}/yacht/add-yacht`;
       console.log('Making request to:', url);
       
       const response = await axios.post(
@@ -191,7 +192,7 @@ export const getYachts = createAsyncThunk<
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `https://faraway.thedevapp.online/yacht/all-yachts?page=${page}&limit=${limit}`,
+        `${API_URL}/yacht/all-yachts?page=${page}&limit=${limit}`,
         {
           withCredentials: true,
           headers: {
@@ -225,7 +226,7 @@ export const getYachtsById = createAsyncThunk(
       try {
           const token = localStorage.getItem("token");
           const response = await axios.get(
-              `https://faraway.thedevapp.online/yacht?id=${yachtsId}`,
+              `${API_URL}/yacht?id=${yachtsId}`,
               {
                   withCredentials: true,
                   headers: {
@@ -254,7 +255,7 @@ export const updateYachts = createAsyncThunk(
       try {
           const token = localStorage.getItem("token");
           const response = await axios.put(
-              `https://faraway.thedevapp.online/yacht/edit-yacht?id=${yachtsId}`,
+              `${API_URL}/yacht/edit-yacht?id=${yachtsId}`,
               payload,
               {
                   withCredentials: true,
@@ -293,7 +294,7 @@ export const deleteYachts = createAsyncThunk<
     try {
       const token = localStorage.getItem("token");
       const response = await axios.delete(
-        `https://faraway.thedevapp.online/yacht/delete-yacht?id=${id}`,
+        `${API_URL}/yacht/delete-yacht?id=${id}`,
         {
           withCredentials: true,
           headers: {
@@ -331,7 +332,7 @@ export const publishYacht = createAsyncThunk<
       const token = localStorage.getItem("token");
       console.log('Token:', token ? 'Token exists' : 'No token found');
       
-      const url = `https://faraway.thedevapp.online/yacht/update-status?id=${yachtId}`;
+      const url = `${API_URL}/yacht/update-status?id=${yachtId}`;
       console.log('Making request to:', url);
       
       const payload = {
