@@ -1,5 +1,7 @@
 # Faraway Admin Panel — Desktop App
 
+[![Build Windows Installer](https://github.com/jahan-code/faraway-admin-panel/actions/workflows/build-windows.yml/badge.svg)](https://github.com/jahan-code/faraway-admin-panel/actions/workflows/build-windows.yml)
+
 This repository contains the Faraway Admin Panel built with Next.js + Electron. It ships as a native Windows desktop application (NSIS installer) using `electron-builder` with `output: "standalone"` for offline support.
 
 ## Scripts
