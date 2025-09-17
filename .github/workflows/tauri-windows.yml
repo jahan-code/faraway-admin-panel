@@ -50,28 +50,38 @@ jobs:
         run: npm run build
 
       - name: Assemble Next standalone into Tauri resources
-        shell: bash
+        shell: powershell
         run: |
-          set -euo pipefail
-          mkdir -p src-tauri/resources/server/standalone
-          mkdir -p src-tauri/resources/server/.next/static
-          mkdir -p src-tauri/resources/server/public
-          # Copy standalone server bundle
-          rsync -a --delete .next/standalone/ src-tauri/resources/server/standalone/
-          # Copy static assets expected by server
-          rsync -a --delete .next/static/ src-tauri/resources/server/.next/static/
-          # Copy public assets
-          if [ -d public ]; then rsync -a --delete public/ src-tauri/resources/server/public/; fi
-          # Create a lightweight launcher that defers to standalone/server.js
-          cat > src-tauri/resources/server/server.js << 'EOF'
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force -Path "src-tauri/resources/server/standalone" | Out-Null
+          New-Item -ItemType Directory -Force -Path "src-tauri/resources/server/.next/static" | Out-Null
+          New-Item -ItemType Directory -Force -Path "src-tauri/resources/server/public" | Out-Null
+
+          if (Test-Path ".next/standalone") {
+            if (Test-Path "src-tauri/resources/server/standalone") { Remove-Item "src-tauri/resources/server/standalone" -Recurse -Force }
+            Copy-Item ".next/standalone" "src-tauri/resources/server/" -Recurse -Force
+          }
+
+          if (Test-Path ".next/static") {
+            if (Test-Path "src-tauri/resources/server/.next/static") { Remove-Item "src-tauri/resources/server/.next/static" -Recurse -Force }
+            New-Item -ItemType Directory -Force -Path "src-tauri/resources/server/.next" | Out-Null
+            Copy-Item ".next/static" "src-tauri/resources/server/.next/" -Recurse -Force
+          }
+
+          if (Test-Path "public") {
+            if (Test-Path "src-tauri/resources/server/public") { Remove-Item "src-tauri/resources/server/public" -Recurse -Force }
+            Copy-Item "public" "src-tauri/resources/server/" -Recurse -Force
+          }
+
+          $serverJs = @'
           // Launcher for Next standalone in Tauri sidecar
           const path = require('path');
-          const { spawn } = require('child_process');
           const PORT = process.env.PORT || '5173';
           const HOSTNAME = process.env.HOSTNAME || '127.0.0.1';
           // Execute the standalone server.js in-process
           require(path.join(__dirname, 'standalone', 'server.js'));
-          EOF
+          '@
+          Set-Content -Path "src-tauri/resources/server/server.js" -Value $serverJs -Encoding UTF8
 
       - name: Build Tauri (Windows)
         run: npx tauri build
