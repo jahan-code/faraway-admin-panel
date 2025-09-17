@@ -4,13 +4,16 @@
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
     "devPath": "http://localhost:3010",
-    "distDir": "../out"
+    "distDir": "out"
   },
   "package": {
     "productName": "Faraway Admin Panel",
     "version": "0.1.0"
   },
   "tauri": {
+    "security": {
+      "csp": null
+    },
     "windows": [
       {
         "title": "Faraway Admin Panel",
@@ -30,9 +33,6 @@
       "dialog": {
         "all": true
       }
-    },
-    "security": {
-      "csp": null
     },
     "bundle": {
       "active": true,
