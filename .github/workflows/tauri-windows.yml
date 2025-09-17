@@ -49,8 +49,29 @@ jobs:
       - name: Build Next.js
         run: npm run build
 
-      - name: Export static site (Next.js)
-        run: npx next export
+      - name: Assemble Next standalone into Tauri resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p src-tauri/resources/server/standalone
+          mkdir -p src-tauri/resources/server/.next/static
+          mkdir -p src-tauri/resources/server/public
+          # Copy standalone server bundle
+          rsync -a --delete .next/standalone/ src-tauri/resources/server/standalone/
+          # Copy static assets expected by server
+          rsync -a --delete .next/static/ src-tauri/resources/server/.next/static/
+          # Copy public assets
+          if [ -d public ]; then rsync -a --delete public/ src-tauri/resources/server/public/; fi
+          # Create a lightweight launcher that defers to standalone/server.js
+          cat > src-tauri/resources/server/server.js << 'EOF'
+          // Launcher for Next standalone in Tauri sidecar
+          const path = require('path');
+          const { spawn } = require('child_process');
+          const PORT = process.env.PORT || '5173';
+          const HOSTNAME = process.env.HOSTNAME || '127.0.0.1';
+          // Execute the standalone server.js in-process
+          require(path.join(__dirname, 'standalone', 'server.js'));
+          EOF
 
       - name: Build Tauri (Windows)
         run: npx tauri build

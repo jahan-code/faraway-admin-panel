@@ -4,7 +4,7 @@
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
     "devPath": "http://localhost:3010",
-    "distDir": "../out"
+    "distDir": "."
   },
   "package": {
     "productName": "Faraway Admin Panel",
@@ -38,6 +38,9 @@
       "active": true,
       "targets": ["msi"],
       "identifier": "com.faraway.admin",
+      "resources": [
+        "resources/server/**"
+      ],
       "windows": {
         "wix": {
           "language": "en-US"
