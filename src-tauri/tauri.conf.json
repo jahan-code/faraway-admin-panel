@@ -4,7 +4,7 @@
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
     "devPath": "http://localhost:3010",
-    "distDir": "out"
+    "distDir": "../out"
   },
   "package": {
     "productName": "Faraway Admin Panel",
