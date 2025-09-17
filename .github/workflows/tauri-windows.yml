@@ -49,6 +49,9 @@ jobs:
       - name: Build Next.js
         run: npm run build
 
+      - name: Export static site (Next.js)
+        run: npx next export -o out
+
       - name: Build Tauri (Windows)
         run: npx tauri build
 
