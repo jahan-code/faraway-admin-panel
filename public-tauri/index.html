@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Faraway Admin Panel</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 2rem; background: #0b1220; color: #e6eefc; }
+      .wrap { max-width: 720px; margin: 0 auto; }
+      h1 { margin: 0 0 0.5rem; font-size: 1.5rem; }
+      p { opacity: 0.8; }
+      .status { margin-top: 1rem; padding: 0.75rem 1rem; background: #121a2b; border: 1px solid #21304d; border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Faraway Admin Panel</h1>
+      <p>Launching local server…</p>
+      <div class="status" id="status">Waiting for http://127.0.0.1:5173 …</div>
+    </div>
+    <script>
+      // This page is only shown briefly while the sidecar server starts.
+      // The Tauri main process will redirect the window to http://127.0.0.1:5173 when ready.
+      let dots = 0;
+      setInterval(() => {
+        dots = (dots + 1) % 4;
+        document.getElementById('status').textContent = 'Waiting for http://127.0.0.1:5173 ' + '.'.repeat(dots);
+      }, 400);
+    </script>
+  </body>
+</html>

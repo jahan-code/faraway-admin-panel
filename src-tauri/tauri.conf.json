@@ -4,7 +4,7 @@
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
     "devPath": "http://localhost:3010",
-    "distDir": "."
+    "distDir": "../public-tauri"
   },
   "package": {
     "productName": "Faraway Admin Panel",
