@@ -32,15 +32,18 @@ const startServer = async () => {
         
         // CORS
         app.use(cors({
-                    origin: [
-                      'https://faraway-admin-panel.vercel.app',
-                      'http://localhost:3000',
-                      'https://fa-taupe.vercel.app',
-                      'https://faraway-admin-pannel.vercel.app',
-                      'https://faraway-psi.vercel.app',
-                      'file://', // Allow Electron app
-                      'app://' // Allow Electron app
-                    ],
+            origin: [
+              'https://faraway-admin-panel.vercel.app',
+              'https://fa-taupe.vercel.app',
+              'https://faraway-admin-pannel.vercel.app',
+              'https://faraway-psi.vercel.app',
+              // Local development with Next
+              'http://localhost:3001',
+              'http://127.0.0.1:3001',
+              // Optional: local Next runtime for desktop (if used in prod sidecar)
+              'http://localhost:3000',
+              'http://127.0.0.1:3000'
+            ],
             credentials: true
         }));
         

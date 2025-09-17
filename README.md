@@ -1,68 +1,39 @@
-# Faraway Admin Panel — Desktop App
+# Faraway Admin Panel — Desktop App (Tauri)
 
-[![Build Windows Installer](https://github.com/jahan-code/faraway-admin-panel/actions/workflows/build-windows.yml/badge.svg)](https://github.com/jahan-code/faraway-admin-panel/actions/workflows/build-windows.yml)
-
-This repository contains the Faraway Admin Panel built with Next.js + Electron. It ships as a native Windows desktop application (NSIS installer) using `electron-builder` with `output: "standalone"` for offline support.
+This repository contains the Faraway Admin Panel built with Next.js and Tauri.
+It ships as a native Windows desktop application via Tauri (small installer, low memory).
 
 ## Scripts
 
-- `npm run dev` — Next.js dev server
-- `npm run dev:electron` — Next.js + Electron in development
-- `npm run build` — Next.js production build (standalone)
-- `npm run build:installer` — Build Windows installer (NSIS)
-- `run-faraway.bat` — Quick launcher for the unpacked app using the production URL
-- `rebuild-and-package.bat` — Full local rebuild on D: (uses caches on `D:/dev-cache/`, disables Tailwind oxide, builds NSIS installer)
+- `npm run dev` — Next.js dev server (http://localhost:3001)
+- `npm run dev:tauri` — Next.js + Tauri in development
+- `npm run build` — Next.js production build
+- `npm run build:tauri` — Build Windows installer/bundle via Tauri
 
-## Clean CI Build (Recommended)
+## Development
 
-We build clean installers in GitHub Actions on Windows runners to avoid local locks and disk issues.
+1) Install prerequisites (Windows):
+   - Rust toolchain (MSVC) via https://rustup.rs
+   - Visual Studio Build Tools ("Desktop development with C++")
+2) Install Node dependencies: `npm ci`
+3) Run Tauri dev: `npm run dev:tauri`
 
-Workflow: `.github/workflows/build-windows.yml`
-- Installs deps with `npm ci`
-- Builds Next.js (`output: standalone`)
-- Packages with `electron-builder --win nsis`
-- Uploads `dist/` as an artifact
+Tauri dev will open a desktop window that loads your Next dev server.
 
-How to use:
-1. Push the repo to GitHub (ensure the workflow file is included).
-2. Open the "Actions" tab → run "Build Windows Installer".
-3. Download artifact `faraway-admin-panel-dist` → inside `dist/` you will find:
-  - `win-unpacked/electron.exe` (unpacked app)
-  - `Faraway Admin Panel-<version>.exe` (Windows installer)
+## Production Build
 
-## Local Build on D: (Offline App)
-
-If you prefer building locally on Windows, use `rebuild-and-package.bat` from an Administrator PowerShell:
+Build the desktop app:
 
 ```powershell
-Set-Location "d:\\farway admin\\faraway-admin-panel"
-.\\rebuild-and-package.bat
+npm ci
+npm run build
+npx tauri build
 ```
 
-What it does:
-- Uses caches on `D:\\dev-cache\\...` and disables Tailwind native oxide
-- Removes `node_modules`, `.next`, `dist`
-- `npm ci` → `npm run build` → `npx electron-builder --win nsis`
+By default, dev loads `http://localhost:3001`. For production, you can:
+- Use static export (no SSR) and point Tauri to static files, or
+- Run a local server (sidecar) for SSR and point the Tauri window to `http://127.0.0.1:<port>`.
 
-Outputs:
-- `dist\\win-unpacked\\electron.exe`
-- `dist\\Faraway Admin Panel-<version>.exe`
+## Notes
 
-## Packaging Notes
-
-- `electron-builder.yml`
-  - `asar: true`, `asarUnpack` for `backend/**/*` and native `.node` files
-  - Includes: `electron/**`, `backend/**`, `.next/standalone/**`, `.next/static/**`, `public/**`, `package.json`, `next.config.ts`
-  - NSIS configured with `build/installer.nsh`
-- `next.config.ts` sets `output: "standalone"` for offline runtime inside Electron.
-- In dev, Electron uses `ELECTRON_START_URL` (set by scripts). In production, Electron spawns `.next/standalone/server.js` and serves on `http://localhost:3000` inside the app window.
-
-## Troubleshooting
-
-- Antivirus locking native binaries (e.g., Tailwind oxide) can break installs. Our CI disables oxide via `TAILWIND_DISABLE_OXIDE=1`. The local rebuild script also disables it and force‑cleans locks.
-- Low disk on `C:`: caches are redirected to `D:` in local scripts.
-
-## Roadmap (optional)
-
-- Code signing for the installer (via CI secrets)
-- Auto‑updates using GitHub Releases and `electron-updater`
+- Voice utilities are available under `tools/voice/` for local TTS/STT.
