@@ -50,7 +50,7 @@ jobs:
         run: npm run build
 
       - name: Export static site (Next.js)
-        run: npx next export -o src-tauri/out
+        run: npx next export --outdir src-tauri/out
 
       - name: Build Tauri (Windows)
         run: npx tauri build
