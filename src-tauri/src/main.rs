@@ -22,8 +22,18 @@ fn main() {
         if let Some(mut server_dir) = resolver.resource_dir() {
           server_dir.push("server");
 
+          // Prefer embedded Node runtime if present, else fallback to system 'node'
+          let mut embedded_node = server_dir.clone();
+          embedded_node.push("node");
+          embedded_node.push("node.exe");
+          let node_cmd = if embedded_node.exists() {
+            embedded_node.as_os_str().to_owned()
+          } else {
+            std::ffi::OsStr::new("node").to_owned()
+          };
+
           // We'll run: node server.js with PORT=5173
-          let mut cmd = Command::new("node");
+          let mut cmd = Command::new(node_cmd);
           cmd.current_dir(&server_dir)
             .env("PORT", "5173")
             .env("HOSTNAME", "127.0.0.1")

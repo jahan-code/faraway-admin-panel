@@ -83,6 +83,21 @@ jobs:
           '@
           Set-Content -Path "src-tauri/resources/server/server.js" -Value $serverJs -Encoding UTF8
 
+      - name: Embed portable Node runtime (Windows)
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $nodeVersion = '20.19.5'
+          $zipUrl = "https://nodejs.org/dist/v$nodeVersion/node-v$nodeVersion-win-x64.zip"
+          $zipPath = "$env:RUNNER_TEMP\\node.zip"
+          Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
+          $extractDir = "$env:RUNNER_TEMP\\node"
+          if (Test-Path $extractDir) { Remove-Item $extractDir -Recurse -Force }
+          Expand-Archive -LiteralPath $zipPath -DestinationPath $extractDir
+          $nodeExe = Get-ChildItem -Path $extractDir -Recurse -Filter node.exe | Select-Object -First 1
+          New-Item -ItemType Directory -Force -Path "src-tauri/resources/server/node" | Out-Null
+          Copy-Item $nodeExe.FullName "src-tauri/resources/server/node/node.exe" -Force
+
       - name: Build Tauri (Windows)
         run: npx tauri build
 
